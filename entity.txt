@@ -1,0 +1,4 @@
+project.type: "FRONT_END","BACK_END","MOBILE"
+question.type: "ESSAY","MUTIPLE_CHOICE"
+e.g. "ESSAY" ： "textext..."
+     "MUTIPLE_CHOICE" : "choice1;choice2;choice3"
