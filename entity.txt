@@ -1,3 +1,4 @@
+user.type: "ADMIN","PROJECT_OWNER"
 project.type: "FRONT_END","BACK_END","MOBILE"
 question.type: "ESSAY","MUTIPLE_CHOICE"
 e.g. "ESSAY" ： "textext..."
