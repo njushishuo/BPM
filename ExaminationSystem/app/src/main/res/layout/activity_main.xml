@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+    <RelativeLayout
+        android:id="@+id/tab_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/transparent">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/tab_text_grey"
+            android:layout_alignParentBottom="true"/>
+        <TextView
+            android:id="@+id/txt_top"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"
+            android:textColor="@color/tab_text_grey"
+            android:text= "@string/infomation" />
+        <ImageButton
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/plus"
+            android:id="@+id/add_rqm"
+            android:layout_alignParentRight="true"
+            android:layout_marginVertical="12dp"
+            android:layout_marginRight="30dp"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/tab_menu"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/txt_xuqiu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/tab_menu_bg"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/tab_xuqiu"
+            android:gravity="center"
+            android:textColor="@drawable/tab_xuqiu_text"
+            android:text="需求"/>
+        <TextView
+            android:id="@+id/txt_shijuan"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/tab_menu_bg"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/tab_shijuan"
+            android:gravity="center"
+            android:textColor="@drawable/tab_shijuan_text"
+            android:text="试卷"/>
+
+        <TextView
+            android:id="@+id/txt_zhanghao"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/tab_menu_bg"
+            android:drawablePadding="3dp"
+            android:drawableTop="@drawable/tab_zhanghao"
+            android:gravity="center"
+            android:textColor="@drawable/tab_zhanghao_text"
+            android:text="账号"/>
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/div_tab_bar"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/tab_text_grey"
+        android:layout_above="@id/tab_menu"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_title"
+        android:layout_above="@id/tab_menu"
+        android:background="@color/transparent">
+    </FrameLayout>
+</RelativeLayout>
