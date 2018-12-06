@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="类型"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:textSize="15sp"/>
+    <Spinner
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_weight="1"
+        android:id="@+id/queston_type">
+    </Spinner>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="数目 "
+        android:gravity="right"
+        android:layout_gravity="center_vertical"
+        android:textSize="15sp"/>
+    <EditText
+        android:layout_width="80dp"
+        android:layout_height="40dp"
+        android:layout_marginVertical="5dp"
+        android:layout_marginRight="10dp"
+        android:layout_weight="1"
+        android:textSize="15sp"
+        android:background="@drawable/edit_bg"
+        android:id="@+id/question_count">
+    </EditText>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/delete"
+        android:background="@color/transparent"
+        android:layout_gravity="center_vertical"
+        android:id="@+id/del_btn"/>
+</LinearLayout>

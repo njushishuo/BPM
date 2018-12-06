@@ -26,77 +26,23 @@
             android:text="添加需求" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/tab_menu"
+    <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="添加"
-            android:textSize="20sp"/>
-    </LinearLayout>
-
-    <LinearLayout
+        android:text="添加"
+        android:textSize="18sp"
+        android:id="@+id/add_xuqiu_button"
+        android:layout_alignParentBottom="true"/>
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tab_title"
-        android:layout_above="@id/tab_menu"
-        android:background="@color/transparent"
-        android:orientation="vertical">
+        android:layout_above="@id/add_xuqiu_button">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="项目类型"
-                android:gravity="center"
-                android:layout_gravity="center_vertical"
-                android:textSize="18sp"/>
-            <Spinner
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
-                android:layout_marginHorizontal="20dp"
-                android:id="@+id/project_type">
-            </Spinner>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:text="项目描述"
-                android:layout_marginHorizontal="20dp"
-                android:textSize="18sp"/>
-            <view
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="2dp"
-            android:maxLines="5"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="试卷模板"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="18dp"
-            android:textSize="18sp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="10dp">
+            android:layout_height="match_parent"
+            android:background="@color/transparent"
+            android:orientation="vertical">
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -104,43 +50,122 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="试题类型"
+                    android:text="项目类型"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="17dp"
-                    android:textSize="15sp"/>
+                    android:textSize="18sp"/>
                 <Spinner
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
+                    android:layout_width="240dp"
+                    android:layout_height="35dp"
                     android:layout_marginVertical="5dp"
                     android:layout_marginHorizontal="20dp"
-                    android:layout_weight="1">
+                    android:id="@+id/project_type"
+                    android:gravity="center"
+                    >
                 </Spinner>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="项目描述"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@color/transparent" />
+            </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="2dp"
+                android:lines="5"
+                android:background="@drawable/edit_bg"
+                android:gravity="start"
+                android:textSize="15sp"
+                android:id="@+id/project_descrip"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="试题数目"
-                    android:gravity="right"
+                    android:text="试卷模板"
                     android:layout_gravity="center_vertical"
-                    android:textSize="15sp"/>
-                <EditText
-                    android:layout_width="80dp"
-                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:textSize="18sp"/>
+                <TextView
+                    android:layout_width="240dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginVertical="5dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_weight="1"
-                    android:textSize="18sp">
-                </EditText>
+                    android:layout_marginHorizontal="20dp"
+                    android:background="@color/transparent"/>
             </LinearLayout>
-            <ImageButton
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/plus2"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                android:layout_marginBottom="10dp"/>
-        </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/add_paper_template"
+                    android:orientation="vertical">
+                </LinearLayout>
+                <ImageButton
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/plus2"
+                    android:layout_gravity="center"
+                    android:background="@color/transparent"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/add_template_button"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="试卷描述"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center"
+                        android:textSize="15sp"
+                        android:layout_marginLeft="8dp"/>
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="5dp"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_weight="10"
+                        android:background="@color/transparent" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="20dp"
+                        android:layout_marginTop="2dp"
+                        android:lines="4"
+                        android:background="@drawable/edit_bg"
+                        android:gravity="start"
+                        android:textSize="15sp"
+                        android:id="@+id/paper_descrip"/>
+                </LinearLayout>
+            </LinearLayout>
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

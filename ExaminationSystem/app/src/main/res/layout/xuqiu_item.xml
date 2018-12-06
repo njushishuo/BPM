@@ -24,22 +24,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="发布时间:"
-            android:textSize="12dp"/>
+            android:textSize="12sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/publish_time"
-            android:textSize="12dp"/>
+            android:textSize="12sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="     项目状态:"
-            android:textSize="10dp"/>
+            android:textSize="12sp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/xuqiu_state"
-            android:textSize="10dp"/>
+            android:textSize="12sp"/>
 
     </LinearLayout>
     <ImageButton
