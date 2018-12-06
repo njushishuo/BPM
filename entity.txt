@@ -2,4 +2,4 @@ user.type: "ADMIN","PROJECT_OWNER"
 project.type: "FRONT_END","BACK_END","MOBILE"
 question.type: "ESSAY","MUTIPLE_CHOICE"
 e.g. "ESSAY" ： "textext..."
-     "MUTIPLE_CHOICE" : "choice1;choice2;choice3"
+     "MUTIPLE_CHOICE" : "choice1;choice2;choice3;0"   //选项用分号隔开，最后给出正确答案下标，从0开始
