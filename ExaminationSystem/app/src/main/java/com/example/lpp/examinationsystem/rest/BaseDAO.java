@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.example.lpp.examinationsystem.model.BaseMBO;
 import com.example.lpp.examinationsystem.model.BaseMBOList;
-import com.example.lpp.examinationsystem.model.LabelList;
 import com.example.lpp.examinationsystem.util.RestInfo;
 
 import org.springframework.http.ContentCodingType;
@@ -62,7 +61,6 @@ public abstract class BaseDAO<T extends BaseMBO, E extends BaseMBOList> {
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
             // Perform the HTTP GET request
-            LabelList sss = new LabelList();
             ResponseEntity<E> response = (ResponseEntity<E>) restTemplate.exchange(url, HttpMethod.GET,
                     new HttpEntity<Object>(requestHeaders), annotation.array(), "SpringSource");
 

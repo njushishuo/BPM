@@ -8,13 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class ShijuanFragment extends Fragment {
+public class AccountFragment extends Fragment{
     private TextView mTextView;
 
-    public  ShijuanFragment(){}
+    public AccountFragment(){}
 
-    public static  ShijuanFragment newInstance(String text){
-        ShijuanFragment fragmentOne = new ShijuanFragment();
+    public static AccountFragment newInstance(String text){
+        AccountFragment fragmentOne = new AccountFragment();
         Bundle bundle = new Bundle();
         bundle.putString("name", text);
         fragmentOne.setArguments(bundle);
@@ -23,7 +23,7 @@ public class ShijuanFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.shijuan_fragment,container,false);
+        View view = inflater.inflate(R.layout.xuqiu_fragment,container,false);
 //        mTextView = (TextView)view.findViewById(R.id.txt_content);
 //        if(getArguments()!=null){
 //            mTextView.setText(getArguments().getString("name"));

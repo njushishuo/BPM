@@ -17,7 +17,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddXuqiuActivity"></activity>
+        <activity android:name=".AddRequirementActivity"></activity>
     </application>
 
 </manifest>

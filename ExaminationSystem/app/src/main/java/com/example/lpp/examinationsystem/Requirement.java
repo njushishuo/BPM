@@ -1,11 +1,11 @@
 package com.example.lpp.examinationsystem;
 
-public class Xuqiu {
+public class Requirement {
     private String id;
     private String publish_time;
     private String state;
 
-    public Xuqiu(String id,String publish_time,String state){
+    public Requirement(String id, String publish_time, String state){
         this.id=id;
         this.publish_time=publish_time;
         this.state=state;

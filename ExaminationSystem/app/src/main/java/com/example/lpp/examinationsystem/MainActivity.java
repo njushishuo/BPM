@@ -6,13 +6,10 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private TextView topBar;
@@ -22,9 +19,9 @@ public class MainActivity extends AppCompatActivity {
 
     private FrameLayout ly_content;
 
-    private XuqiuFragment f1;
-    private ShijuanFragment f2;
-    private ZhanghaoFragment f3;
+    private RequirementFragment f1;
+    private PaperFragment f2;
+    private AccountFragment f3;
     private FragmentManager fragmentManager;
     private ImageButton addRequirement;
     private ImageButton deleteRequirement;
@@ -56,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         selected();
         tabXuqiu.setSelected(true);
         if(f1==null){
-            f1 = new XuqiuFragment();
+            f1 = new RequirementFragment();
             transaction.add(R.id.fragment_container,f1);
         }else{
             transaction.show(f1);
@@ -72,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
                 tabXuqiu.setSelected(true);
                 topBar.setText("需求");
                 if(f1==null){
-                    f1 = new XuqiuFragment();
+                    f1 = new RequirementFragment();
                     transaction.add(R.id.fragment_container,f1);
                 }else{
                     transaction.show(f1);
@@ -93,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 selected();
                 tabShijuan.setSelected(true);
                 topBar.setText("试卷");
-                    f2 = new ShijuanFragment();
+                    f2 = new PaperFragment();
                     f2=f2.newInstance("试卷");
                     transaction.add(R.id.fragment_container,f2);
                 if (addRequirement.getVisibility()==View.VISIBLE){
@@ -112,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 tabZhanghao.setSelected(true);
                 topBar.setText("账号");
                 if(f3==null){
-                    f3 = new ZhanghaoFragment();
+                    f3 = new AccountFragment();
                     f3=f3.newInstance("账号");
                     transaction.add(R.id.fragment_container,f3);
                 }else{
@@ -128,7 +125,7 @@ public class MainActivity extends AppCompatActivity {
         addRequirement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainActivity.this,AddXuqiuActivity.class);
+                Intent intent=new Intent(MainActivity.this,AddRequirementActivity.class);
                 startActivity(intent);
             }
         });
