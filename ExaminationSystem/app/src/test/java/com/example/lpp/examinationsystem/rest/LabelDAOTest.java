@@ -1,5 +1,7 @@
 package com.example.lpp.examinationsystem.rest;
 
+import com.example.lpp.examinationsystem.model.Label;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +18,17 @@ public class LabelDAOTest {
     public void getObject() {
         System.out.println("Request single object");
         System.out.println(dao.getObject("1544078682813"));
-        System.out.println(dao.getObject("1544078713499"));
+    }
+
+    @Test
+    public void putObject() {
+        System.out.println("Put single object");
+        Label label = dao.getObject("1544078682813");
+        String name = "Data Structure";
+        label.setName("Test_Labels");
+        System.out.println(dao.putObject("1544078682813", label));
+        label.setName(name);
+        System.out.println(dao.putObject("1544078682813", label));
     }
 
     @Test
