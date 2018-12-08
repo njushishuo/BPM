@@ -1,9 +1,12 @@
 package com.example.lpp.examinationsystem.rest;
 
+import com.example.lpp.examinationsystem.model.Label;
 import com.example.lpp.examinationsystem.model.Question;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 public class QuestionDAOTest {
 
@@ -30,9 +33,9 @@ public class QuestionDAOTest {
         question.setAnswer("Test_Answer");
 //        labels.remove(0);
 //        question.setLabels(labels);
-        System.out.println(dao.putObject(question));
+        System.out.println(dao.putObject("1544080236674", question));
         question.setAnswer(answer);
-        System.out.println(dao.putObject(question));
+        System.out.println(dao.putObject("1544080236674", question));
     }
 
     @Test

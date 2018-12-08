@@ -42,12 +42,4 @@
             android:textSize="12sp"/>
 
     </LinearLayout>
-    <ImageButton
-        android:layout_width="25dp"
-        android:layout_height="25dp"
-        android:id="@+id/delete_rqm"
-        android:background="@drawable/shanchu"
-        android:layout_alignRight="@id/first_line"
-        android:layout_centerInParent="true"
-        android:layout_margin="10dp"/>
 </RelativeLayout>

@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         tabZhanghao = (TextView)this.findViewById(R.id.txt_zhanghao);
         ly_content = (FrameLayout) findViewById(R.id.fragment_container);
         addRequirement=(ImageButton) findViewById(R.id.add_rqm);
-        deleteRequirement=(ImageButton) findViewById(R.id.delete_rqm);
+//        deleteRequirement=(ImageButton) findViewById(R.id.delete_rqm);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         hideAllFragment(transaction);

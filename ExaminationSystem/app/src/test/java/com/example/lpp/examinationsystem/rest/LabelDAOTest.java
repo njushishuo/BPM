@@ -26,9 +26,9 @@ public class LabelDAOTest {
         Label label = dao.getObject("1544078682813");
         String name = "Data Structure";
         label.setName("Test_Labels");
-        System.out.println(dao.putObject(label));
+        System.out.println(dao.putObject("1544078682813", label));
         label.setName(name);
-        System.out.println(dao.putObject(label));
+        System.out.println(dao.putObject("1544078682813", label));
     }
 
     @Test
