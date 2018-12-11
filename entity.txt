@@ -1,4 +1,5 @@
-project.type: "WEB","APP","WE_CHAT_APPLET"
+//project.type: "WEB","APP","WE_CHAT_APPLET"
+recruit.requirement:  "WEB","APP","WE_CHAT_APPLET"
 question.type: "ESSAY","MUTIPLE_CHOICE"
 e.g. "ESSAY" ： "textext..."
      "MUTIPLE_CHOICE" : "choice1;choice2;choice3;0"   //选项用分号隔开，最后给出正确答案下标，从0开始
