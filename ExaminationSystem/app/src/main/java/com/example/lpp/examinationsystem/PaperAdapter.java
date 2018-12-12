@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.example.lpp.examinationsystem.model.Paper;
 import com.example.lpp.examinationsystem.model.Recruit;
 import com.example.lpp.examinationsystem.rest.RecruitDAO;
+import com.example.lpp.examinationsystem.util.RestUtil;
 
 import java.lang.reflect.Array;
 import java.util.List;
@@ -39,7 +40,7 @@ public class PaperAdapter extends ArrayAdapter<Paper> {
         TextView paper_description=(TextView) view.findViewById(R.id.paper_description);
         paper_id.setText(String.valueOf(paper.getId()));
         paper_description.setText(paper.getName());
-        project_name.setText(String.valueOf(paper.getRecruitInfo().getName()));
+        project_name.setText(String.valueOf(RestUtil.getRecruitInfo(paper).getName()));
 //        RecruitDAO recruitDAO=new RecruitDAO();
 //        String recruitid=String.valueOf(paper.getRecruitid());
 //        Recruit recruit=recruitDAO.getObject(recruitid);

@@ -1,6 +1,8 @@
 package com.example.lpp.examinationsystem.rest;
 
 import com.example.lpp.examinationsystem.model.Template;
+import com.example.lpp.examinationsystem.util.RestUtil;
+import com.example.lpp.examinationsystem.util.StringUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +13,7 @@ public class TemplateDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new TemplateDAO();
+        dao = DAOFactory.getTemplateDAO();
     }
 
     @Test
@@ -19,14 +21,23 @@ public class TemplateDAOTest {
         System.out.println("Request single object");
         Template template = dao.getObject("1544618242313");
         System.out.println(template);
-        System.out.println(template.getItemsInfo());
-        System.out.println(template.getRecruitInfo());
+        System.out.println(StringUtil.parseTemplateItems(template.getItems()));
+        System.out.println(RestUtil.getRecruitInfo(template));
     }
 
     @Test
     public void getList() {
         System.out.println("Request list");
         System.out.println(dao.getList());
+    }
+
+    @Test
+    public void putObject() {
+        System.out.println("Put Object");
+        Template template = dao.getObject("1544618242313");
+        System.out.println(template);
+        template.setItems("1544614143626,2;1544615626185,1");
+        System.out.println(dao.putObject(template));
     }
 
     @Test

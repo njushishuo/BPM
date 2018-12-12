@@ -45,16 +45,4 @@ public class Paper extends BaseMBO {
         this.recruitId = recruitId;
     }
 
-    public Recruit getRecruitInfo() {
-        return DAOFactory.getRecruitDAO().getObject(recruitId);
-    }
-
-    public List<Question> getQuestionsInfo() {
-        QuestionDAO dao = DAOFactory.getQuestionDAO();
-        List<Question> questions = new ArrayList<>();
-        for (String questionId : StringUtil.getSplits(this.questions)) {
-            questions.add(dao.getObject(questionId));
-        }
-        return questions;
-    }
 }

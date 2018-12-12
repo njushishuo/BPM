@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.example.lpp.examinationsystem.model.Recruit;
+import com.example.lpp.examinationsystem.util.RestUtil;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class RequirementAdapter extends ArrayAdapter<Recruit> {
         TextView project_id=(TextView) view.findViewById(R.id.project_id);
         project_name.setText(xuqiu.getName());
         project_type.setText(xuqiu.getDescription());
-        publisher.setText(xuqiu.getOwnerInfo().getNickname());
+        publisher.setText(RestUtil.getOwnerInfo(xuqiu).getNickname());
         descript.setText(xuqiu.getDescription());
         project_id.setText(String.valueOf(xuqiu.getId()));
         return view;

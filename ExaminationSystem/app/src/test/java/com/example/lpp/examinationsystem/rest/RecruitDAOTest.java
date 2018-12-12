@@ -1,6 +1,7 @@
 package com.example.lpp.examinationsystem.rest;
 
 import com.example.lpp.examinationsystem.model.Recruit;
+import com.example.lpp.examinationsystem.util.RestUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +20,7 @@ public class RecruitDAOTest {
         System.out.println("Request single object");
         Recruit recruit = dao.getObject("1544616954639");
         System.out.println(recruit);
-        System.out.println(recruit.getOwnerInfo());
+        System.out.println(RestUtil.getOwnerInfo(recruit));
     }
 
     @Test

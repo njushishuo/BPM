@@ -16,6 +16,7 @@ import com.example.lpp.examinationsystem.model.Question;
 import com.example.lpp.examinationsystem.model.QuestionList;
 import com.example.lpp.examinationsystem.rest.PaperDAO;
 import com.example.lpp.examinationsystem.rest.QuestionDAO;
+import com.example.lpp.examinationsystem.util.RestUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class PaperDetailActivity extends AppCompatActivity {
             public void run() {
                 PaperDAO paperDAO=new PaperDAO();
                 Paper paper=paperDAO.getObject(id);
-                List<Question> questionList=paper.getQuestionsInfo();
+                List<Question> questionList=RestUtil.getQuestionsInfo(paper);
                 for (int i=0;i<questionList.size();i++){
                     Question question=new Question();
                     question=questionList.get(i);

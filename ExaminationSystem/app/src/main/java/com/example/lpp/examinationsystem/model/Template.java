@@ -1,13 +1,8 @@
 package com.example.lpp.examinationsystem.model;
 
 import com.example.lpp.examinationsystem.rest.DAOFactory;
-import com.example.lpp.examinationsystem.rest.TemplateItemDAO;
-import com.example.lpp.examinationsystem.util.StringUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Template extends BaseMBO {
@@ -45,16 +40,4 @@ public class Template extends BaseMBO {
         this.recruitId = recruitId;
     }
 
-    public Recruit getRecruitInfo() {
-        return DAOFactory.getRecruitDAO().getObject(recruitId);
-    }
-
-    public List<TemplateItem> getItemsInfo() {
-        TemplateItemDAO dao = DAOFactory.getTemplateItemDAO();
-        List<TemplateItem> items = new ArrayList<>();
-        for (String itemId : StringUtil.getSplits(this.items)) {
-            items.add(dao.getObject(itemId));
-        }
-        return items;
-    }
 }

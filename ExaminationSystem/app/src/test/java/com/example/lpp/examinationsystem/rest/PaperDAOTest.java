@@ -1,6 +1,7 @@
 package com.example.lpp.examinationsystem.rest;
 
 import com.example.lpp.examinationsystem.model.Paper;
+import com.example.lpp.examinationsystem.util.RestUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,8 +20,8 @@ public class PaperDAOTest {
         System.out.println("Request single object");
         Paper paper = dao.getObject("1544617612330");
         System.out.println(paper);
-        System.out.println(paper.getQuestionsInfo());
-        System.out.println(paper.getRecruitInfo());
+        System.out.println(RestUtil.getQuestionsInfo(paper));
+        System.out.println(RestUtil.getRecruitInfo(paper));
     }
 
     @Test

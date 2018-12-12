@@ -1,7 +1,7 @@
 package com.example.lpp.examinationsystem.rest;
 
 import com.example.lpp.examinationsystem.model.Question;
-import com.example.lpp.examinationsystem.util.StringUtil;
+import com.example.lpp.examinationsystem.util.RestUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class QuestionDAOTest {
         System.out.println("Request single object");
         Question question = dao.getObject("1544615560340");
         System.out.println(question);
-        System.out.println(question.getLabelsInfo());
+        System.out.println(RestUtil.getLabelsInfo(question));
     }
 
     @Test

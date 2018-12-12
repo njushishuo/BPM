@@ -2,15 +2,13 @@ package com.example.lpp.examinationsystem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,11 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lpp.examinationsystem.model.Label;
-import com.example.lpp.examinationsystem.model.LabelList;
 import com.example.lpp.examinationsystem.model.Template;
-import com.example.lpp.examinationsystem.model.TemplateItem;
 import com.example.lpp.examinationsystem.rest.LabelDAO;
-import com.example.lpp.examinationsystem.rest.PaperDAO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -191,33 +186,34 @@ public class RequirementDetailActivity extends AppCompatActivity {
     }
 
     private void initTemplate(){
-        List<TemplateItem> templateItems=new ArrayList<>();
-        templateItems=templateList.get(0).getItemsInfo();
-        templateItemCount=templateItems.size();
-        for (int i=0;i<templateItemCount;i++){
-            View newItemView=View.inflate(this,R.layout.item_add_template,null);
-            questionTypeSpinner=(Spinner) newItemView.findViewById(R.id.question_type);
-            RequirementDetailActivity.Myadapter adapter2=new RequirementDetailActivity.Myadapter(this,android.R.layout.simple_spinner_dropdown_item,questionTypes);
-            questionTypeSpinner.setAdapter(adapter2);
-            int index=0;
-            for (int j=0;j<questionTypes.size();j++){
-                if (questionTypes.get(j).equals(templateItems.get(i).getLabelInfo().getName()))
-                    index=j;
-            }
-            questionTypeSpinner.setSelection(index,true);
-            questionTypeSpinner.setOnItemSelectedListener(new RequirementDetailActivity.questionTypeSpinnerListener());
-            delBtn=(ImageButton) newItemView.findViewById(R.id.del_btn);
-            delBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    delTemplateItem(view);
-                }
-            });
-            editCount=(EditText) newItemView.findViewById(R.id.question_count);
-//            System.out.println(editCount);
-            editCount.setText(String.valueOf(templateItems.get(i).getCount()));
-            addPaperTemplate.addView(newItemView);
-        }
+        // TODO
+//        List<TemplateItem> templateItems=new ArrayList<>();
+//        templateItems=templateList.get(0).getItemsInfo();
+//        templateItemCount=templateItems.size();
+//        for (int i=0;i<templateItemCount;i++){
+//            View newItemView=View.inflate(this,R.layout.item_add_template,null);
+//            questionTypeSpinner=(Spinner) newItemView.findViewById(R.id.question_type);
+//            RequirementDetailActivity.Myadapter adapter2=new RequirementDetailActivity.Myadapter(this,android.R.layout.simple_spinner_dropdown_item,questionTypes);
+//            questionTypeSpinner.setAdapter(adapter2);
+//            int index=0;
+//            for (int j=0;j<questionTypes.size();j++){
+//                if (questionTypes.get(j).equals(templateItems.get(i).getLabelInfo().getName()))
+//                    index=j;
+//            }
+//            questionTypeSpinner.setSelection(index,true);
+//            questionTypeSpinner.setOnItemSelectedListener(new RequirementDetailActivity.questionTypeSpinnerListener());
+//            delBtn=(ImageButton) newItemView.findViewById(R.id.del_btn);
+//            delBtn.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    delTemplateItem(view);
+//                }
+//            });
+//            editCount=(EditText) newItemView.findViewById(R.id.question_count);
+////            System.out.println(editCount);
+//            editCount.setText(String.valueOf(templateItems.get(i).getCount()));
+//            addPaperTemplate.addView(newItemView);
+//        }
     }
     /**
      * 定义一个Myadapter类继承ArrayAdapter

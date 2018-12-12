@@ -51,7 +51,4 @@ public class Recruit extends BaseMBO {
         this.ownerId = ownerId;
     }
 
-    public User getOwnerInfo() {
-        return DAOFactory.getUserDAO().getObject(ownerId);
-    }
 }
