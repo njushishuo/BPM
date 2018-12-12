@@ -31,3 +31,7 @@ Question:
      	"MUTIPLE_CHOICE" : "choice1;choice2;choice3;0" //选项用分号隔开，最后给出正确答案下标，从0开始
     3. labels: 记录该试题的所有标签ID列表
     4. 因为question编辑的可能性很低，所以不单独创建关联表
+    
+    
+Label:
+    1. parent_id: 可选字段，表示该标签的父级标签 例如 algorithm->sort 就是一种父级与子级的关系
