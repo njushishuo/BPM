@@ -1,30 +1,23 @@
 package com.example.lpp.examinationsystem.model;
 
+import com.example.lpp.examinationsystem.rest.DAOFactory;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Recruit extends BaseMBO {
 
-    @JsonProperty("name")
+    @JsonProperty("recruit_name")
     private String name;
 
-    @JsonProperty("description")
+    @JsonProperty("recruit_desc")
     private String description;
 
-    @JsonProperty("requirement")
-    private String requirement;
+    @JsonProperty("recruit_type")
+    private String type;
 
-    @JsonProperty("papers")
-    private List<Paper> papers;
-
-    @JsonProperty("paperframe")
-    private List<Template> paperframe;
-
-    @JsonProperty("owner")
-    private User owner;
+    @JsonProperty("owner_id")
+    private String ownerId;
 
     public String getName() {
         return name;
@@ -42,35 +35,23 @@ public class Recruit extends BaseMBO {
         this.description = description;
     }
 
-    public String getRequirement() {
-        return requirement;
+    public String getType() {
+        return type;
     }
 
-    public void setRequirement(String requirement) {
-        this.requirement = requirement;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public List<Paper> getPapers() {
-        return papers;
+    public String getOwnerId() {
+        return ownerId;
     }
 
-    public void setPapers(List<Paper> papers) {
-        this.papers = papers;
+    public void setOwnerId(String ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public List<Template> getPaperframe() {
-        return paperframe;
-    }
-
-    public void setPaperframe(List<Template> paperframe) {
-        this.paperframe = paperframe;
-    }
-
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public User getOwnerInfo() {
+        return DAOFactory.getUserDAO().getObject(ownerId);
     }
 }

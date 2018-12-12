@@ -1,6 +1,7 @@
 package com.example.lpp.examinationsystem.rest;
 
 import com.example.lpp.examinationsystem.model.Question;
+import com.example.lpp.examinationsystem.util.StringUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,21 +18,16 @@ public class QuestionDAOTest {
     @Test
     public void getObject() {
         System.out.println("Request single object");
-        System.out.println(dao.getObject("1544080236674"));
-        System.out.println(dao.getObject("1544080345103"));
+        Question question = dao.getObject("1544615560340");
+        System.out.println(question);
+        System.out.println(question.getLabelsInfo());
     }
 
     @Test
     public void putObject() {
         System.out.println("Put single object");
-        Question question = dao.getObject("1544080236674");
-        String answer = "/* correct answer */";
-//        List<Label> labels = question.getLabels();
-        question.setAnswer("Test_Answer");
-//        labels.remove(0);
-//        question.setLabels(labels);
-        System.out.println(dao.putObject(question));
-        question.setAnswer(answer);
+        Question question = dao.getObject("1544615560340");
+        question.setQuestionType("ESSAY");
         System.out.println(dao.putObject(question));
     }
 
@@ -39,5 +35,16 @@ public class QuestionDAOTest {
     public void getList() {
         System.out.println("Request list");
         System.out.println(dao.getList());
+    }
+
+    @Test
+    public void postObject() {
+        System.out.println("Post Object");
+        Question question = new Question();
+        question.setDescription("Describe TCP?");
+        question.setAnswer("TCP is just TCP!");
+        question.setQuestionType("essay");
+        question.setLabels("");
+        System.out.println(dao.postObject(question));
     }
 }

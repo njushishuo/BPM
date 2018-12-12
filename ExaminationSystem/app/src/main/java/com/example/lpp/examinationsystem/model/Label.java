@@ -6,8 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Label extends BaseMBO {
 
-    @JsonProperty("name")
+    @JsonProperty("label_name")
     private String name;
+
+    @JsonProperty("parent_id")
+    private long parentId;
 
     public String getName() {
         return name;
@@ -17,4 +20,11 @@ public class Label extends BaseMBO {
         this.name = name;
     }
 
+    public long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(long parentId) {
+        this.parentId = parentId;
+    }
 }

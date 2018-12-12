@@ -1,43 +1,60 @@
 package com.example.lpp.examinationsystem.model;
 
+import com.example.lpp.examinationsystem.rest.DAOFactory;
+import com.example.lpp.examinationsystem.rest.TemplateItemDAO;
+import com.example.lpp.examinationsystem.util.StringUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Template extends BaseMBO {
 
-    @JsonProperty("description")
-    private String description;
-
-    @JsonProperty("recruitid")
-    private long recruitid;
+    @JsonProperty("template_name")
+    private String name;
 
     @JsonProperty("items")
-    private List<TemplateItem> items;
+    private String items;
 
-    public String getDescription() {
-        return description;
+    @JsonProperty("recruit_id")
+    private String recruitId;
+
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public long getRecruitid() {
-        return recruitid;
-    }
-
-    public void setRecruitid(long recruitid) {
-        this.recruitid = recruitid;
-    }
-
-    public List<TemplateItem> getItems() {
+    public String getItems() {
         return items;
     }
 
-    public void setItems(List<TemplateItem> items) {
+    public void setItems(String items) {
         this.items = items;
+    }
+
+    public String getRecruitId() {
+        return recruitId;
+    }
+
+    public void setRecruitId(String recruitId) {
+        this.recruitId = recruitId;
+    }
+
+    public Recruit getRecruitInfo() {
+        return DAOFactory.getRecruitDAO().getObject(recruitId);
+    }
+
+    public List<TemplateItem> getItemsInfo() {
+        TemplateItemDAO dao = DAOFactory.getTemplateItemDAO();
+        List<TemplateItem> items = new ArrayList<>();
+        for (String itemId : StringUtil.getSplits(this.items)) {
+            items.add(dao.getObject(itemId));
+        }
+        return items;
     }
 }

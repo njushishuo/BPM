@@ -17,13 +17,13 @@ public class LabelDAOTest {
     @Test
     public void getObject() {
         System.out.println("Request single object");
-        System.out.println(dao.getObject("1544078682813"));
+        System.out.println(dao.getObject("1544614143626"));
     }
 
     @Test
     public void putObject() {
         System.out.println("Put single object");
-        Label label = dao.getObject("1544078682813");
+        Label label = dao.getObject("1544614143626");
         String name = "Data Structure";
         label.setName("Test_Labels");
         System.out.println(dao.putObject(label));
@@ -35,5 +35,13 @@ public class LabelDAOTest {
     public void getList() {
         System.out.println("Request list");
         System.out.println(dao.getList());
+    }
+
+    @Test
+    public void postObject() {
+        System.out.println("Post Object");
+        Label label = new Label();
+        label.setName("JAVA");
+        System.out.println(dao.postObject(label));
     }
 }

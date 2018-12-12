@@ -20,7 +20,7 @@ import java.util.List;
 
 public abstract class BaseDAO<T extends BaseMBO, E extends BaseMBOList> {
 
-    public static final String BASE_URL = "http://47.107.241.57:8080/Entity/Uf47c4842079e/SmartHR";
+    public static final String BASE_URL = "http://47.107.241.57:8080/Entity/Uf47c4842079e/SmartHRv2";
 
     public T getObject(String id) {
         try {
@@ -99,6 +99,36 @@ public abstract class BaseDAO<T extends BaseMBO, E extends BaseMBOList> {
             return response.getBody();
         } catch (Exception e) {
             Log.e("HttpPut Error", e.getMessage(), e);
+        }
+
+        return null;
+    }
+
+    public T postObject(T object) {
+        try {
+            // The URL for making the GET request
+            RestInfo annotation = this.getClass().getAnnotation(RestInfo.class);
+            final String url = BASE_URL + "/" + annotation.path();
+
+            // Add the gzip Accept-Encoding header to the request
+            HttpHeaders requestHeaders = new HttpHeaders();
+            requestHeaders.setAcceptEncoding(ContentCodingType.GZIP);
+            requestHeaders.setContentType(new MediaType("application", "json"));
+
+            HttpEntity<T> requestEntity = new HttpEntity<T>(object, requestHeaders);
+
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+
+            ResponseEntity<T> response = (ResponseEntity<T>) restTemplate.exchange(url, HttpMethod.POST,
+                    requestEntity, annotation.object(), "SpringSource");
+
+            // Return the response body to display to the user
+            return response.getBody();
+        } catch (Exception e) {
+            Log.e("HttpPost Error", e.getMessage(), e);
         }
 
         return null;

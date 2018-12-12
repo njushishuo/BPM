@@ -1,5 +1,7 @@
 package com.example.lpp.examinationsystem.rest;
 
+import com.example.lpp.examinationsystem.model.Recruit;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,12 +17,25 @@ public class RecruitDAOTest {
     @Test
     public void getObject() {
         System.out.println("Request single object");
-        System.out.println(dao.getObject("1544103103620"));
+        Recruit recruit = dao.getObject("1544616954639");
+        System.out.println(recruit);
+        System.out.println(recruit.getOwnerInfo());
     }
 
     @Test
     public void getList() {
         System.out.println("Request list");
         System.out.println(dao.getList());
+    }
+
+    @Test
+    public void postObject() {
+        System.out.println("Post Object");
+        Recruit recruit = new Recruit();
+        recruit.setName("Baidu Season 3 JAVA recruit");
+        recruit.setDescription("Baidu Season 3 JAVA recruit - 211 & 985 needed");
+        recruit.setType("WEB");
+        recruit.setOwnerId("1544614750296");
+        System.out.println(dao.postObject(recruit));
     }
 }

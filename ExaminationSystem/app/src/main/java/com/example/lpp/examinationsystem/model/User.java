@@ -6,17 +6,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User extends BaseMBO {
 
-    @JsonProperty("nickname")
-    private String nickname;
+    @JsonProperty("username")
+    private String username;
 
     @JsonProperty("password")
     private String password;
 
-    @JsonProperty("username")
-    private String username;
+    @JsonProperty("nickname")
+    private String nickname;
 
     @JsonProperty("company")
     private String company;
+
+    @JsonProperty("city")
+    private String city;
 
     public String getNickname() {
         return nickname;
@@ -48,5 +51,13 @@ public class User extends BaseMBO {
 
     public void setCompany(String company) {
         this.company = company;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

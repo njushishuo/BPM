@@ -1,43 +1,60 @@
 package com.example.lpp.examinationsystem.model;
 
+import com.example.lpp.examinationsystem.rest.DAOFactory;
+import com.example.lpp.examinationsystem.rest.QuestionDAO;
+import com.example.lpp.examinationsystem.util.StringUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Paper extends BaseMBO {
 
-    @JsonProperty("description")
-    private String description;
-
-    @JsonProperty("recruitid")
-    private long recruitid;
+    @JsonProperty("paper_name")
+    private String name;
 
     @JsonProperty("questions")
-    private List<Question> questions;
+    private String questions;
 
-    public String getDescription() {
-        return description;
+    @JsonProperty("recruit_id")
+    private String recruitId;
+
+    public String getName() {
+        return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public long getRecruitid() {
-        return recruitid;
-    }
-
-    public void setRecruitid(long recruitid) {
-        this.recruitid = recruitid;
-    }
-
-    public List<Question> getQuestions() {
+    public String getQuestions() {
         return questions;
     }
 
-    public void setQuestions(List<Question> questions) {
+    public void setQuestions(String questions) {
         this.questions = questions;
+    }
+
+    public String getRecruitId() {
+        return recruitId;
+    }
+
+    public void setRecruitId(String recruitId) {
+        this.recruitId = recruitId;
+    }
+
+    public Recruit getRecruitInfo() {
+        return DAOFactory.getRecruitDAO().getObject(recruitId);
+    }
+
+    public List<Question> getQuestionsInfo() {
+        QuestionDAO dao = DAOFactory.getQuestionDAO();
+        List<Question> questions = new ArrayList<>();
+        for (String questionId : StringUtil.getSplits(this.questions)) {
+            questions.add(dao.getObject(questionId));
+        }
+        return questions;
     }
 }
