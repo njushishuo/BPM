@@ -9,11 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.example.lpp.examinationsystem.model.Recruit;
+
 import java.util.List;
 
-public class RequirementAdapter extends ArrayAdapter<Requirement> {
+public class RequirementAdapter extends ArrayAdapter<Recruit> {
     int resourceId;
-    public RequirementAdapter(Context context, int textViewResourceId, List<Requirement> objects){
+    public RequirementAdapter(Context context, int textViewResourceId, List<Recruit> objects){
         super(context,textViewResourceId, objects);
         resourceId=textViewResourceId;
     }
@@ -21,14 +23,18 @@ public class RequirementAdapter extends ArrayAdapter<Requirement> {
     @NonNull
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        Requirement xuqiu=getItem(position);
+        Recruit xuqiu=getItem(position);
         View view= LayoutInflater.from(getContext()).inflate(resourceId,null);
-        TextView project_id=(TextView) view.findViewById(R.id.xuqiu_id);
-        TextView publish_time=(TextView) view.findViewById(R.id.publish_time);
-        TextView project_state=(TextView) view.findViewById(R.id.xuqiu_state);
-        project_id.setText(xuqiu.getId());
-        publish_time.setText(xuqiu.getId());
-        project_state.setText(xuqiu.getState());
+        TextView project_name=(TextView) view.findViewById(R.id.xuqiu_id);
+        TextView project_type=(TextView) view.findViewById(R.id.project_type);
+        TextView publisher=(TextView) view.findViewById(R.id.publisher);
+        TextView descript=(TextView) view.findViewById(R.id.project_descrip);
+        TextView project_id=(TextView) view.findViewById(R.id.project_id);
+        project_name.setText(xuqiu.getName());
+        project_type.setText(xuqiu.getRequirement());
+        publisher.setText(xuqiu.getOwner().getNickname());
+        descript.setText(xuqiu.getDescription());
+        project_id.setText(String.valueOf(xuqiu.getId()));
         return view;
     }
 }

@@ -2,6 +2,8 @@ package com.example.lpp.examinationsystem;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -17,6 +19,8 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.lpp.examinationsystem.model.Label;
+import com.example.lpp.examinationsystem.rest.LabelDAO;
 import com.example.lpp.examinationsystem.rest.PaperDAO;
 
 import java.util.ArrayList;
@@ -33,16 +37,14 @@ public class AddRequirementActivity extends AppCompatActivity {
     private ImageButton delBtn;
     private Button add;
 
-    private static final String []projectType={"前端","后端","移动端"};
-    private static final String []questionTypesText={"Java","C++","HTML","Android","iOS","JavaEE","JavaScript"};
     private List<String> projectTypes=new ArrayList<>();
     private List<String> questionTypes=new ArrayList<>();
-    private Map<String,Boolean> questionTypeExist=new HashMap<>();
     //获取的数据
     private Map<String,Integer> templateData=new HashMap<>();
     private String templateDescript;
     private int projectTypeIndex;
     private String projectDescript;
+    private final static int UPDATE_LABEL=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,19 @@ public class AddRequirementActivity extends AppCompatActivity {
         if (actionBar!=null){
             actionBar.hide();
         }
-        initSpinner();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                LabelDAO labelDAO=new LabelDAO();
+                List<Label> labelList=(ArrayList)labelDAO.getList();
+                for (int i=0;i<labelList.size();i++){
+                    questionTypes.add(labelList.get(i).getName().toString());
+                }
+                Message message=new Message();
+                message.what=UPDATE_LABEL;
+                handler.sendMessage(message);
+            }
+        }).start();
 
         addPaperTemplate=(LinearLayout) findViewById(R.id.add_paper_template);
         addQuestionTemplate=findViewById(R.id.add_template_button);
@@ -77,9 +91,9 @@ public class AddRequirementActivity extends AppCompatActivity {
 
                 for (int i=0;i<addPaperTemplate.getChildCount();i++){
                     EditText editText3=(EditText) addPaperTemplate.getChildAt(i).findViewById(R.id.question_count);
-                    Spinner question_spinner=(Spinner) addPaperTemplate.getChildAt(i).findViewById(R.id.queston_type);
+                    Spinner question_spinner=(Spinner) addPaperTemplate.getChildAt(i).findViewById(R.id.question_type);
                     if (question_spinner.isSelected()&&editText3.getText().toString().length()>0)
-                        templateData.put(questionTypesText[question_spinner.getSelectedItemPosition()],Integer.parseInt(editText3.getText().toString()));
+                        templateData.put(questionTypes.get(question_spinner.getSelectedItemPosition()),Integer.parseInt(editText3.getText().toString()));
                 }
                 System.out.println(templateData);
                 Toast.makeText(AddRequirementActivity.this,"Success",Toast.LENGTH_SHORT).show();
@@ -87,24 +101,29 @@ public class AddRequirementActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        
+
     }
 
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case UPDATE_LABEL:
+                    initSpinner();
+                    break;
+                default:break;
+            }
+        }
+    };
     private void initSpinner(){
         projectTypeSpinner =(Spinner) findViewById(R.id.project_type);
 
         projectTypes.add("前端");
         projectTypes.add("后端");
         projectTypes.add("移动端");
+        projectTypes.add("WEB");
         projectTypes.add("请选择");
 
-        questionTypes.add("Java");
-        questionTypes.add("C++");
-        questionTypes.add("HTML");
-        questionTypes.add("Android");
-        questionTypes.add("iOS");
-        questionTypes.add("JavaEE");
-        questionTypes.add("JavaScript");
         questionTypes.add("请选择");
 
         Myadapter adapter=new Myadapter(this,android.R.layout.simple_spinner_dropdown_item,projectTypes);
@@ -168,7 +187,7 @@ public class AddRequirementActivity extends AppCompatActivity {
             return;
         }
         View newItemView=View.inflate(this,R.layout.item_add_template,null);
-        questionTypeSpinner=(Spinner) newItemView.findViewById(R.id.queston_type);
+        questionTypeSpinner=(Spinner) newItemView.findViewById(R.id.question_type);
         Myadapter adapter2=new Myadapter(this,android.R.layout.simple_spinner_dropdown_item,questionTypes);
         questionTypeSpinner.setAdapter(adapter2);
         questionTypeSpinner.setSelection(questionTypes.size()-1,true);

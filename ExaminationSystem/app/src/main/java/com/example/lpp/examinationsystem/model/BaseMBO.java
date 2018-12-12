@@ -5,9 +5,10 @@ import android.util.Log;
 import com.example.lpp.examinationsystem.util.ReflectionUtil;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
 import java.lang.reflect.Field;
 
-public class BaseMBO {
+public class BaseMBO implements Serializable {
 
     @JsonProperty("id")
     private long id;

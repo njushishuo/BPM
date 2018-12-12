@@ -3,7 +3,8 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-tools:context=".XuqiuDetailActivity">
+tools:context=".RequirementDetailActivity"
+    tools:ignore="MissingDefaultResource">
 
 <RelativeLayout
     android:id="@+id/tab_title"
@@ -40,7 +41,8 @@ tools:context=".XuqiuDetailActivity">
         android:id="@+id/list_view"
         android:layout_below="@+id/tab_title"
         android:background="#FFFFFF"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="50dp"

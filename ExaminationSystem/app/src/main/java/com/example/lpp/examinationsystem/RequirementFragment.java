@@ -1,9 +1,13 @@
 package com.example.lpp.examinationsystem;
 
+import android.annotation.TargetApi;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.renderscript.ScriptIntrinsicYuvToRGB;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.util.Log;
@@ -14,12 +18,20 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.lpp.examinationsystem.model.Recruit;
+import com.example.lpp.examinationsystem.model.RecruitList;
+import com.example.lpp.examinationsystem.model.Template;
+import com.example.lpp.examinationsystem.rest.BaseDAO;
+import com.example.lpp.examinationsystem.rest.RecruitDAO;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RequirementFragment extends ListFragment {
-    private List<Requirement> xuqiuList;
-
+public class RequirementFragment extends ListFragment implements Serializable {
+    private List<Recruit> recruitList;
+    private static final int UPDATE_LIST=1;
+    RequirementAdapter adapter;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.xuqiu_fragment, container, false);
@@ -29,31 +41,56 @@ public class RequirementFragment extends ListFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        xuqiuList = new ArrayList<>();
+        recruitList = new ArrayList<>();
+        adapter= new RequirementAdapter(getContext(),R.layout.xuqiu_item,recruitList);
+        RequirementFragment.this.setListAdapter(adapter);
         initXuqiu();
-        RequirementAdapter adapter = new RequirementAdapter(getContext(),R.layout.xuqiu_item,xuqiuList);
-        this.setListAdapter(adapter);
     }
 
+    private Handler handler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case UPDATE_LIST:
+                    adapter.notifyDataSetChanged();
+                    break;
+                    default:break;
+            }
+        }
+    };
     private void initXuqiu(){
-        Requirement x1=new Requirement("1234","2018-11-22","进行中");
-        xuqiuList.add(x1);
-        Requirement x2=new Requirement("2333","2018-01-11","已结束");
-        xuqiuList.add(x2);
-        Requirement x3=new Requirement("3344","2018-05-11","已结束");
-        xuqiuList.add(x3);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                RecruitDAO recruitDAO=new RecruitDAO();
+                List list=recruitDAO.getList();
+                int l=list.size();
+                for (int i=0;i<l;i++){
+                    Recruit r=new Recruit();
+                    r=(Recruit) list.get(i);
+                    recruitList.add(r);
+                }
+//                System.out.println(recruitList);
+                Message message=new Message();
+                message.what=UPDATE_LIST;
+                handler.sendMessage(message);
+            }
+        }).start();
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Requirement item=xuqiuList.get(position);
-        String project_id=item.getId();
-        Log.d("RequirementFragment",project_id);
+        Recruit item=recruitList.get(position);
+        String project_name=item.getName();
         Intent intent=new Intent(getActivity(),RequirementDetailActivity.class);
-        intent.putExtra("project id",project_id);
+        intent.putExtra("project id",item.getId());
+        intent.putExtra("project name",project_name);
+        intent.putExtra("project type",item.getRequirement());
+        intent.putExtra("project description",item.getDescription());
+        ArrayList<Template> paperFrame=new ArrayList<>();
+        paperFrame=(ArrayList<Template>) item.getPaperframe();
+        intent.putExtra("paper frame",(Serializable) paperFrame);
         startActivity(intent);
     }
-
-
 }

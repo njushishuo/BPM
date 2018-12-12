@@ -24,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private AccountFragment f3;
     private FragmentManager fragmentManager;
     private ImageButton addRequirement;
-    private ImageButton deleteRequirement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         tabShijuan = (TextView)this.findViewById(R.id.txt_shijuan);
         tabZhanghao = (TextView)this.findViewById(R.id.txt_zhanghao);
         ly_content = (FrameLayout) findViewById(R.id.fragment_container);
-        addRequirement=(ImageButton) findViewById(R.id.add_rqm);
-//        deleteRequirement=(ImageButton) findViewById(R.id.delete_rqm);
+        addRequirement =(ImageButton) findViewById(R.id.add_rqm);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         hideAllFragment(transaction);
@@ -86,13 +84,15 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 hideAllFragment(transaction);
-
                 selected();
                 tabShijuan.setSelected(true);
                 topBar.setText("试卷");
-                    f2 = new PaperFragment();
-                    f2=f2.newInstance("试卷");
+                if (f2==null){
+                    f2=new PaperFragment();
                     transaction.add(R.id.fragment_container,f2);
+                }else{
+                    transaction.show(f2);
+                }
                 if (addRequirement.getVisibility()==View.VISIBLE){
                     addRequirement.setVisibility(View.GONE);
                 }
@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //删除需求
     }
 
     //重置所有文本的选中状态

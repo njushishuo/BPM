@@ -1,8 +1,9 @@
 package com.example.lpp.examinationsystem.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public abstract class BaseMBOList<T extends BaseMBO> {
+public abstract class BaseMBOList<T extends BaseMBO> implements Serializable {
 
     public abstract List<T> getList();
 

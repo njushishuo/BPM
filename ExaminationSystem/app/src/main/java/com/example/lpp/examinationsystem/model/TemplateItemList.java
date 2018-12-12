@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TemplateItemList extends BaseMBOList<TemplateItem> {
+public class TemplateItemList extends BaseMBOList<TemplateItem>  {
 
     @JsonProperty(value = "Template_item")
     private List<TemplateItem> list;
