@@ -1,5 +1,33 @@
-//project.type: "WEB","APP","WE_CHAT_APPLET"
-recruit.requirement:  "WEB","APP","WE_CHAT_APPLET"
-question.type: "ESSAY","MUTIPLE_CHOICE"
-e.g. "ESSAY" ： "textext..."
-     "MUTIPLE_CHOICE" : "choice1;choice2;choice3;0"   //选项用分号隔开，最后给出正确答案下标，从0开始
+Recruit:
+	1. recruit_type:"WEB","APP","WE_CHAT_APPLET"
+	2. owner_id 用于查询用户的项目
+
+Template: 
+    1. 取消了TemplateItem表
+	2. items 记录了该模板的所有试题标签以及数目
+ 		e.g: labelId1,labelId2,3;labelId3,5;labelId4,2
+		表示一共有三种试题：
+		(label1,label2,3), 最后一位表示该题型的数量
+		(label3,5),
+		(label4,2)
+
+	3. 创建模板的时候需要按照上述格式保存items;
+	4. 修改模板的时候主要是更新items所以没必要单独创建关联表
+	5. recruit_id 用于根据项目查找模板
+
+Paper:
+	1. questions: 记录该试卷的所有试题ID列表
+		e.g: questionId1;questionId2;questionId3
+		表示该试卷一共有三道题
+	2. recruit_id 用于根据项目查找试卷
+	3. 试卷不可编辑，只能添加或者删除
+
+
+Question:
+    1. question_type: "ESSAY","MUTIPLE_CHOICE" (论述题，选择题)
+    2. answer: 根据试题类型answer需要存储不同的内容
+    e.g. 
+    	"ESSAY" ： "textext..." //论述题直接给出答案即可
+     	"MUTIPLE_CHOICE" : "choice1;choice2;choice3;0" //选项用分号隔开，最后给出正确答案下标，从0开始
+    3. labels: 记录该试题的所有标签ID列表
+    4. 因为question编辑的可能性很低，所以不单独创建关联表
