@@ -51,7 +51,7 @@ public class PaperDetailActivity extends AppCompatActivity {
             public void run() {
                 PaperDAO paperDAO=new PaperDAO();
                 Paper paper=paperDAO.getObject(id);
-                List<Question> questionList=paper.getQuestions();
+                List<Question> questionList=paper.getQuestionsInfo();
                 for (int i=0;i<questionList.size();i++){
                     Question question=new Question();
                     question=questionList.get(i);

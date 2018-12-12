@@ -91,7 +91,7 @@ public class RequirementDetailActivity extends AppCompatActivity {
         editProjectDes=(EditText) findViewById(R.id.project_descrip);
         editProjectDes.setText(des);
         editPaperDes=(EditText) findViewById(R.id.paper_descrip);
-        editPaperDes.setText(template.getDescription());
+        editPaperDes.setText(template.getName());
         addPaperTemplate=(LinearLayout) findViewById(R.id.add_paper_template);
         addQuestionTemplate=findViewById(R.id.add_template_button);
         new Thread(new Runnable() {
@@ -192,7 +192,7 @@ public class RequirementDetailActivity extends AppCompatActivity {
 
     private void initTemplate(){
         List<TemplateItem> templateItems=new ArrayList<>();
-        templateItems=templateList.get(0).getItems();
+        templateItems=templateList.get(0).getItemsInfo();
         templateItemCount=templateItems.size();
         for (int i=0;i<templateItemCount;i++){
             View newItemView=View.inflate(this,R.layout.item_add_template,null);
@@ -201,7 +201,7 @@ public class RequirementDetailActivity extends AppCompatActivity {
             questionTypeSpinner.setAdapter(adapter2);
             int index=0;
             for (int j=0;j<questionTypes.size();j++){
-                if (questionTypes.get(j).equals(templateItems.get(i).getLabel().getName()))
+                if (questionTypes.get(j).equals(templateItems.get(i).getLabelInfo().getName()))
                     index=j;
             }
             questionTypeSpinner.setSelection(index,true);

@@ -31,8 +31,8 @@ public class RequirementAdapter extends ArrayAdapter<Recruit> {
         TextView descript=(TextView) view.findViewById(R.id.project_descrip);
         TextView project_id=(TextView) view.findViewById(R.id.project_id);
         project_name.setText(xuqiu.getName());
-        project_type.setText(xuqiu.getRequirement());
-        publisher.setText(xuqiu.getOwner().getNickname());
+        project_type.setText(xuqiu.getDescription());
+        publisher.setText(xuqiu.getOwnerInfo().getNickname());
         descript.setText(xuqiu.getDescription());
         project_id.setText(String.valueOf(xuqiu.getId()));
         return view;

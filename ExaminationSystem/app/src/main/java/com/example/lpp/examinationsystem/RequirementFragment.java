@@ -86,11 +86,12 @@ public class RequirementFragment extends ListFragment implements Serializable {
         Intent intent=new Intent(getActivity(),RequirementDetailActivity.class);
         intent.putExtra("project id",item.getId());
         intent.putExtra("project name",project_name);
-        intent.putExtra("project type",item.getRequirement());
+        intent.putExtra("project type",item.getType());
         intent.putExtra("project description",item.getDescription());
         ArrayList<Template> paperFrame=new ArrayList<>();
-        paperFrame=(ArrayList<Template>) item.getPaperframe();
-        intent.putExtra("paper frame",(Serializable) paperFrame);
+        // TODO
+//        paperFrame=(ArrayList<Template>) item.getPaperframe();
+//        intent.putExtra("paper frame",(Serializable) paperFrame);
         startActivity(intent);
     }
 }
