@@ -133,4 +133,32 @@ public abstract class BaseDAO<T extends BaseMBO, E extends BaseMBOList> {
 
         return null;
     }
+
+    public String deleteObject(T object) {
+        try {
+            // The URL for making the GET request
+            RestInfo annotation = this.getClass().getAnnotation(RestInfo.class);
+            final String url = BASE_URL + "/" + annotation.path() + "/" + object.getId();
+
+            // Add the gzip Accept-Encoding header to the request
+            HttpHeaders requestHeaders = new HttpHeaders();
+            requestHeaders.setAcceptEncoding(ContentCodingType.GZIP);
+            requestHeaders.setContentType(new MediaType("application", "x-www-form-urlencoded"));
+
+            HttpEntity<String> requestEntity = new HttpEntity<String>(requestHeaders);
+
+            // Create a new RestTemplate instance
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
+//            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            ResponseEntity<String> response = (ResponseEntity<String>) restTemplate.exchange(url, HttpMethod.DELETE,
+                    requestEntity, String.class, "SpringSource");
+
+            return response.getBody();
+        } catch (Exception e) {
+            Log.e("HttpDelete Error", e.getMessage(), e);
+        }
+
+        return null;
+    }
 }

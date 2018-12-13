@@ -1,11 +1,13 @@
 package com.example.lpp.examinationsystem.rest;
 
+import com.example.lpp.examinationsystem.model.Label;
 import com.example.lpp.examinationsystem.model.Template;
-import com.example.lpp.examinationsystem.util.RestUtil;
 import com.example.lpp.examinationsystem.util.StringUtil;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Map;
 
 public class TemplateDAOTest {
 
@@ -21,8 +23,10 @@ public class TemplateDAOTest {
         System.out.println("Request single object");
         Template template = dao.getObject("1544618242313");
         System.out.println(template);
-        System.out.println(StringUtil.parseTemplateItems(template.getItems()));
-        System.out.println(RestUtil.getRecruitInfo(template));
+        Map<Label, Integer> map = StringUtil.parseTemplateItems(template.getItems());
+        System.out.println(map);
+        System.out.println(StringUtil.buildTemplateItems(map));
+//        System.out.println(RestUtil.getRecruitInfo(template));
     }
 
     @Test

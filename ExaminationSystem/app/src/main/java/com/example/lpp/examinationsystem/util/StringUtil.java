@@ -44,9 +44,24 @@ public class StringUtil {
 
     public static String buildTemplateItems(Map<Label, Integer> map) {
         StringBuilder builder = new StringBuilder();
+        Map<Integer, String> selector = new HashMap<>();
+
         for (Map.Entry<Label, Integer> label : map.entrySet()) {
-            // TODO
+            Label target = label.getKey();
+            int amount = label.getValue();
+            if (selector.containsKey(amount)) {
+                String string = selector.get(amount);
+                string += SPLIT_TEMPLATE_ITEM + target.getId();
+                selector.put(amount, string);
+            } else {
+                selector.put(amount, target.getId() + "");
+            }
         }
+        for (Map.Entry<Integer, String> slice : selector.entrySet()) {
+            builder.append(slice.getValue()).append(SPLIT_TEMPLATE_ITEM).append(slice.getKey());
+            builder.append(SPLIT_TEMPLATE);
+        }
+        builder.deleteCharAt(builder.lastIndexOf(SPLIT_TEMPLATE));
         return builder.toString();
     }
 }

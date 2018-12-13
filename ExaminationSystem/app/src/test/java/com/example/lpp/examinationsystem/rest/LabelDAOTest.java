@@ -11,7 +11,7 @@ public class LabelDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new LabelDAO();
+        dao = DAOFactory.getLabelDAO();
     }
 
     @Test
@@ -41,7 +41,14 @@ public class LabelDAOTest {
     public void postObject() {
         System.out.println("Post Object");
         Label label = new Label();
-        label.setName("JAVA");
+        label.setName("FUCK");
         System.out.println(dao.postObject(label));
+    }
+
+    @Test
+    public void deleteObject() {
+        System.out.println("Delete Object");
+        Label label = dao.getObject("1544664606026");
+        System.out.println(dao.deleteObject(label));
     }
 }
