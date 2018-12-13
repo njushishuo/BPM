@@ -24,7 +24,7 @@ Paper:
 
 
 Question:
-    1. question_type: "ESSAY","MUTIPLE_CHOICE" (论述题，选择题)
+    1. question_type: "ESSAY","MULTIPLE_CHOICE" (论述题，选择题)
     2. answer: 根据试题类型answer需要存储不同的内容
     e.g. 
     	"ESSAY" ： "textext..." //论述题直接给出答案即可
