@@ -12,7 +12,7 @@ public class PaperDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new PaperDAO();
+        dao = DAOFactory.getPaperDAO();
     }
 
     @Test

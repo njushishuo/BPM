@@ -1,13 +1,7 @@
 package com.example.lpp.examinationsystem.model;
 
-import com.example.lpp.examinationsystem.rest.DAOFactory;
-import com.example.lpp.examinationsystem.rest.QuestionDAO;
-import com.example.lpp.examinationsystem.util.StringUtil;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Paper extends BaseMBO {

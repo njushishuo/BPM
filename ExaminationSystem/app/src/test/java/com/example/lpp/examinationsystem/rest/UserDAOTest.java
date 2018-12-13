@@ -11,7 +11,7 @@ public class UserDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new UserDAO();
+        dao = DAOFactory.getUserDAO();
     }
 
     @Test

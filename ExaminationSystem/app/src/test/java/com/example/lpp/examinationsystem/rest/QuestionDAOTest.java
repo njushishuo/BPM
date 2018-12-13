@@ -12,7 +12,7 @@ public class QuestionDAOTest {
 
     @Before
     public void setUp() throws Exception {
-        dao = new QuestionDAO();
+        dao = DAOFactory.getQuestionDAO();
     }
 
     @Test

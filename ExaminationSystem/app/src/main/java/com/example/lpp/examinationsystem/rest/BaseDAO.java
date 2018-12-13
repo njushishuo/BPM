@@ -150,7 +150,6 @@ public abstract class BaseDAO<T extends BaseMBO, E extends BaseMBOList> {
             // Create a new RestTemplate instance
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new StringHttpMessageConverter());
-//            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<String> response = (ResponseEntity<String>) restTemplate.exchange(url, HttpMethod.DELETE,
                     requestEntity, String.class, "SpringSource");
 
