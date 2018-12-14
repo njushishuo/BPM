@@ -18,6 +18,9 @@ public class Recruit extends BaseMBO {
     @JsonProperty("owner_id")
     private String ownerId;
 
+    @JsonProperty("owner_nickname")
+    private String ownerNickname;
+
     public String getName() {
         return name;
     }
@@ -50,4 +53,11 @@ public class Recruit extends BaseMBO {
         this.ownerId = ownerId;
     }
 
+    public String getOwnerNickname() {
+        return ownerNickname;
+    }
+
+    public void setOwnerNickname(String ownerNickname) {
+        this.ownerNickname = ownerNickname;
+    }
 }
