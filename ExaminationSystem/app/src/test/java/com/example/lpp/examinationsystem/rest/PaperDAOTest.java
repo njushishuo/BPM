@@ -39,4 +39,9 @@ public class PaperDAOTest {
         paper.setRecruitId("1544616954639");
         System.out.println(dao.postObject(paper));
     }
+
+    @Test
+    public void getByRecruit() {
+        System.out.println(dao.getPapersByRecruit("1544616954639"));
+    }
 }

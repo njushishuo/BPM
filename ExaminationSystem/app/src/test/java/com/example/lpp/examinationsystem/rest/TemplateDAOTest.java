@@ -53,4 +53,9 @@ public class TemplateDAOTest {
         template.setRecruitId("1544616954639");
         System.out.println(dao.postObject(template));
     }
+
+    @Test
+    public void getByRecruit() {
+        System.out.println(dao.getTemplatesByRecruit("1544616954639"));
+    }
 }

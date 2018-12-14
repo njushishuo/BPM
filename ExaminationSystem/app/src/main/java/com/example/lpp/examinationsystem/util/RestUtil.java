@@ -45,4 +45,11 @@ public class RestUtil {
         return DAOFactory.getUserDAO().getObject(recruit.getOwnerId());
     }
 
+    public static List<Paper> getPapersByRecruit(Recruit recruit) {
+        return DAOFactory.getPaperDAO().getPapersByRecruit(String.valueOf(recruit.getId()));
+    }
+
+    public static List<Template> getTemplatesByRecruit(Recruit recruit) {
+        return DAOFactory.getTemplateDAO().getTemplatesByRecruit(String.valueOf(recruit.getId()));
+    }
 }
