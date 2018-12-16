@@ -43,21 +43,13 @@ tools:context=".RequirementDetailActivity"
         android:background="#FFFFFF"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="导出试卷"
-        android:layout_weight="1"
-        android:textSize="18sp"
-        android:id="@+id/output_paper"
-        android:layout_alignParentBottom="true"/>
+
 
 
 <ScrollView
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@id/tab_title"
-    android:layout_above="@id/output_paper">
+    android:layout_below="@id/tab_title">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -120,7 +112,7 @@ tools:context=".RequirementDetailActivity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="试卷模板"
+                android:text="模板列表"
                 android:layout_gravity="center_vertical"
                 android:gravity="center"
                 android:textSize="18sp"/>
@@ -131,64 +123,20 @@ tools:context=".RequirementDetailActivity"
                 android:layout_marginHorizontal="20dp"
                 android:background="@color/transparent"/>
         </LinearLayout>
-        <LinearLayout
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginHorizontal="10dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_paper_template"
-                android:orientation="vertical">
-            </LinearLayout>
-            <ImageButton
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:src="@drawable/plus2"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/add_template_button"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="试卷描述"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginVertical="5dp"
-                    android:layout_weight="10"
-                    android:background="@color/transparent" />
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="20dp"
-                    android:layout_marginTop="2dp"
-                    android:lines="4"
-                    android:background="@drawable/edit_bg"
-                    android:gravity="start"
-                    android:textSize="15sp"
-                    android:id="@+id/paper_descrip"/>
-            </LinearLayout>
-        </LinearLayout>
-
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="5dp"
+            android:id="@+id/template_list"
+            android:background="@color/template_list_view_bg">
+        </ListView>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="添加模板"
+            android:id="@+id/add_template"/>
     </LinearLayout>
 </ScrollView>
 </RelativeLayout>

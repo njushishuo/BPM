@@ -44,13 +44,13 @@ public class RequirementFragment extends ListFragment implements Serializable {
         recruitList = new ArrayList<>();
         adapter= new RequirementAdapter(getContext(),R.layout.xuqiu_item,recruitList);
         RequirementFragment.this.setListAdapter(adapter);
-        initXuqiu();
+//        initXuqiu();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        adapter.notifyDataSetChanged();
+        initXuqiu();
     }
 
     private Handler handler=new Handler(){
@@ -71,12 +71,13 @@ public class RequirementFragment extends ListFragment implements Serializable {
                 RecruitDAO recruitDAO=new RecruitDAO();
                 List list=recruitDAO.getList();
                 int l=list.size();
+                if (recruitList!=null){recruitList.removeAll(recruitList);}
                 for (int i=0;i<l;i++){
                     Recruit r=new Recruit();
                     r=(Recruit) list.get(i);
                     recruitList.add(r);
                 }
-//                System.out.println(recruitList);
+                System.out.println(recruitList);
                 Message message=new Message();
                 message.what=UPDATE_LIST;
                 handler.sendMessage(message);

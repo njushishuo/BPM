@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -38,35 +39,23 @@ public class RequirementDetailActivity extends AppCompatActivity {
 
     private TextView topTab;
     private EditText editProjectDes;
-    private EditText editPaperDes;
-    private EditText editCount;
     private Spinner projectTypeSpinner;
-    private Spinner questionTypeSpinner;
-    private ImageButton addQuestionTemplate;
-    private LinearLayout addPaperTemplate;
-    private ImageButton delBtn;
     private ImageButton menuBtn;
-    private Button outputBtn;
+    private Button addTemplate;
     private ListView listView;
-    private int addInvalidLabel=1;//0:不添加请选择；1：添加请选择
+    private ListView templateListView;
     private static final String []projectType={"WEB","APP","WE_CHAT_APPLET"};
-    private static int templateItemCount=0;
-    private static final int UPDATE_TEMPLATE=0;
-    private static final int UPDATE_LABEL=1;
-    private static final int SAVE=2;
-    private List<String> questionTypes=new ArrayList<>();
+    private static final int UPDATE_TEMPLATE_LIST=0;
+    private static final int SAVE_SUCCESS=1;
+    private static final int SAVE_FAIL=2;
     private List<String> menuList=new ArrayList<>();
-
+    private List<Template> templateList;
     //获取的数据
-    private Map<String,Integer> templateData=new HashMap<>();
-    private String templateDescript;
     private String id;
     private String name;
     private String type;
     private int projectTypeIndex=0;
     private String des;
-    private List<Template> templateList;
-    private List<Label> labelList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,50 +64,10 @@ public class RequirementDetailActivity extends AppCompatActivity {
         if (actionBar!=null){
             actionBar.hide();
         }
-        //获取xuqiu_fragment传来的数据
-        Intent intent=getIntent();
-        id= intent.getStringExtra("project id");
-        name=intent.getStringExtra("project name");
-        type=intent.getStringExtra("project type");
-        des=intent.getStringExtra("project description");
-        topTab=(TextView) findViewById(R.id.txt_top);
-        topTab.setText(name);
+
+        //顶栏menu
         menuBtn=(ImageButton) findViewById(R.id.menu_btn);
-        editProjectDes=(EditText) findViewById(R.id.project_descrip);
-        editProjectDes.setText(des);
-        editPaperDes=(EditText) findViewById(R.id.paper_descrip);
-        addPaperTemplate=(LinearLayout) findViewById(R.id.add_paper_template);
-        addQuestionTemplate=findViewById(R.id.add_template_button);
-        initSpinner();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //获取项目的template
-                RecruitDAO recruitDAO=new RecruitDAO();
-//                System.out.println(recruitDAO.getObject(id));
-                templateList=new ArrayList<>();
-                templateList=RestUtil.getTemplatesByRecruit(recruitDAO.getObject(id));
-                Message message1=new Message();
-                message1.what=UPDATE_TEMPLATE;
-                handler.sendMessage(message1);
-                //获取标签
-                LabelDAO labelDAO=new LabelDAO();
-                labelList=new ArrayList<>();
-                labelList=(ArrayList) labelDAO.getList();
-                for (int i=0;i<labelList.size();i++){
-                    questionTypes.add(labelList.get(i).getName().toString());
-                }
-                Message message=new Message();
-                message.what=UPDATE_LABEL;
-                handler.sendMessage(message);
-            }
-        }).start();
-        addQuestionTemplate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    addTemplateItem();
-                }
-        });
+        //顶栏menu弹出列表
         initListView();
         listView.setVisibility(View.GONE);
         menuBtn.setOnClickListener(new View.OnClickListener() {
@@ -132,17 +81,72 @@ public class RequirementDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //获取xuqiu_fragment传来的数据
+        final Intent intent=getIntent();
+        des=intent.getStringExtra("project description");
+        id= intent.getStringExtra("project id");
+        name=intent.getStringExtra("project name");
+        type=intent.getStringExtra("project type");
+        //标题栏名字
+        topTab=(TextView) findViewById(R.id.txt_top);
+        topTab.setText(name);
+        editProjectDes=(EditText) findViewById(R.id.project_descrip);
+        editProjectDes.setText(des);
+        //初始化project的spinner
+        initSpinner();
+        //初始化template列表
+        initTemplate();
+        //添加模板button
+        addTemplate=(Button) findViewById(R.id.add_template);
+        addTemplate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1=new Intent(RequirementDetailActivity.this,AddTemplateActivity.class);
+                intent1.putExtra("recruitId",id);
+                intent1.putExtra("project type",type);
+                intent1.putExtra("project description",des);
+                intent1.putExtra("project name",name);
+                startActivityForResult(intent1,1);
+            }
+        });
+    }
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
-                case UPDATE_LABEL:
+                case UPDATE_TEMPLATE_LIST:
+                    List<String>  templateListText=new ArrayList<>();
+                    for (int i=0;i<templateList.size();i++){
+                        templateListText.add(templateList.get(i).getName());
+                    }
+                    ArrayAdapter<String> adapter=new ArrayAdapter<String>(RequirementDetailActivity.this,android.R.layout.simple_list_item_1,templateListText);
+                    templateListView.setAdapter(adapter);
+                    int totalHeight = 0;
+                    for (int i = 0; i < adapter.getCount(); i++) {
+                        View listItem = adapter.getView(i, null, listView);
+                        listItem.measure(0, 0);
+                        totalHeight += listItem.getMeasuredHeight();
+                    }
+
+                    ViewGroup.LayoutParams params =templateListView.getLayoutParams();
+                    params.height = totalHeight + (templateListView.getDividerHeight() * (adapter.getCount()-1));
+                    ((ViewGroup.MarginLayoutParams)params).setMargins(10, 10, 10, 10);
+                    templateListView.setLayoutParams(params);
                     break;
-                case UPDATE_TEMPLATE:
-                    System.out.println("templateList:"+templateList);
-                    initTemplate();
+                case SAVE_SUCCESS:
+                    Toast.makeText(RequirementDetailActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
+                    listView.setVisibility(View.GONE);
                     break;
+                case SAVE_FAIL:
+                    Toast.makeText(RequirementDetailActivity.this,"保存失败",Toast.LENGTH_SHORT).show();
+                    listView.setVisibility(View.GONE);
                 default:break;
             }
         }
@@ -160,18 +164,7 @@ public class RequirementDetailActivity extends AppCompatActivity {
                 switch (i){
                     case 0://保存修改
                         des=editProjectDes.getText().toString();
-//                        System.out.println(des);
-                        templateDescript=editPaperDes.getText().toString();
-//                        System.out.println(templateDescript);
-                        for (int j=0;j<addPaperTemplate.getChildCount();j++){
-                            EditText editText3=(EditText) addPaperTemplate.getChildAt(j).findViewById(R.id.question_count);
-                            Spinner question_spinner=(Spinner) addPaperTemplate.getChildAt(j).findViewById(R.id.question_type);
-                            if (question_spinner.getSelectedItemPosition()!=labelList.size()&&editText3.getText().toString().length()>0)
-                                templateData.put(questionTypes.get(question_spinner.getSelectedItemPosition()).toString(),Integer.parseInt(editText3.getText().toString()));
-                        }
-//                        System.out.println(templateData);
                         projectTypeIndex=projectTypeSpinner.getSelectedItemPosition();
-//                        System.out.println(projectTypeIndex);
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -180,22 +173,22 @@ public class RequirementDetailActivity extends AppCompatActivity {
                                 newRecruit=recruitDAO.getObject(id);
                                 newRecruit.setType(projectType[projectTypeIndex]);
                                 newRecruit.setDescription(des);
-//                                Recruit res=recruitDAO.putObject(newRecruit);
-//                                if (res==null){
-//                                    Toast.makeText(RequirementDetailActivity.this,"save fail",Toast.LENGTH_SHORT).show();
-//                                    listView.setVisibility(View.GONE);
-//                                }else{
-                                    TemplateDAO templateDAO=new TemplateDAO();
-                                    System.out.println(templateDAO.getTemplatesByRecruit(id));
-//                                    Toast.makeText(RequirementDetailActivity.this,"Successfully save",Toast.LENGTH_SHORT).show();
-//                                    listView.setVisibility(View.GONE);
-//                                }
+                                Recruit res=recruitDAO.putObject(newRecruit);
+                                if (res==null){
+                                    Message message=new Message();
+                                    message.what=SAVE_FAIL;
+                                    handler.sendMessage(message);
+                                }else{
+                                    Message message=new Message();
+                                    message.what=SAVE_SUCCESS;
+                                    handler.sendMessage(message);
+                                }
                             }
                         }).start();
 
                         break;
                     case 1://删除项目
-                        Toast.makeText(RequirementDetailActivity.this,"Successfully delete",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RequirementDetailActivity.this,"暂无删除项目功能",Toast.LENGTH_SHORT).show();
                         listView.setVisibility(View.GONE);
                         break;
                     default:
@@ -216,33 +209,21 @@ public class RequirementDetailActivity extends AppCompatActivity {
     }
 
     private void initTemplate(){
-//        List<TemplateItem> templateItems=new ArrayList<>();
-//        templateItems=templateList.get(0).getItemsInfo();
-//        templateItemCount=templateItems.size();
-//        for (int i=0;i<templateItemCount;i++){
-//            View newItemView=View.inflate(this,R.layout.item_add_template,null);
-//            questionTypeSpinner=(Spinner) newItemView.findViewById(R.id.question_type);
-//            RequirementDetailActivity.Myadapter adapter2=new RequirementDetailActivity.Myadapter(this,android.R.layout.simple_spinner_dropdown_item,questionTypes);
-//            questionTypeSpinner.setAdapter(adapter2);
-//            int index=0;
-//            for (int j=0;j<questionTypes.size();j++){
-//                if (questionTypes.get(j).equals(templateItems.get(i).getLabelInfo().getName()))
-//                    index=j;
-//            }
-//            questionTypeSpinner.setSelection(index,true);
-//            questionTypeSpinner.setOnItemSelectedListener(new RequirementDetailActivity.questionTypeSpinnerListener());
-//            delBtn=(ImageButton) newItemView.findViewById(R.id.del_btn);
-//            delBtn.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    delTemplateItem(view);
-//                }
-//            });
-//            editCount=(EditText) newItemView.findViewById(R.id.question_count);
-////            System.out.println(editCount);
-//            editCount.setText(String.valueOf(templateItems.get(i).getCount()));
-//            addPaperTemplate.addView(newItemView);
-//        }
+        templateListView=(ListView) findViewById(R.id.template_list);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                TemplateDAO templateDAO=new TemplateDAO();
+                RecruitDAO recruitDao=new RecruitDAO();
+                if (templateList!=null) templateList.removeAll(templateList);
+                templateList=RestUtil.getTemplatesByRecruit(recruitDao.getObject(id));
+                if (templateList!=null){
+                    Message message=new Message();
+                    message.what=UPDATE_TEMPLATE_LIST;
+                    handler.sendMessage(message);
+                }
+            }
+        }).start();
     }
     /**
      * 定义一个Myadapter类继承ArrayAdapter
@@ -276,46 +257,5 @@ public class RequirementDetailActivity extends AppCompatActivity {
         }
     }
 
-    //获取试题类型
-    class questionTypeSpinnerListener implements AdapterView.OnItemSelectedListener{
-        @Override
-        public void onItemSelected(AdapterView<?> parent, View view,
-                                   int position, long id) {
-            //将选择的元素显示出来
-            String selected = parent.getItemAtPosition(position).toString();
-        }
 
-        @Override
-        public void onNothingSelected(AdapterView<?> parent) {
-            System.out.println("Nothing Select");
-        }
-    }
-
-    private void addTemplateItem(){
-        if (addPaperTemplate.getChildCount()==7){
-            return;
-        }
-        if (addInvalidLabel==1){
-            questionTypes.add("请选择");
-            addInvalidLabel=0;
-        }
-        View newItemView=View.inflate(this,R.layout.item_add_template,null);
-        questionTypeSpinner=(Spinner) newItemView.findViewById(R.id.question_type);
-        RequirementDetailActivity.Myadapter adapter2=new RequirementDetailActivity.Myadapter(this,android.R.layout.simple_spinner_dropdown_item,questionTypes);
-        questionTypeSpinner.setAdapter(adapter2);
-        questionTypeSpinner.setSelection(questionTypes.size()-1,true);
-        questionTypeSpinner.setOnItemSelectedListener(new RequirementDetailActivity.questionTypeSpinnerListener());
-        delBtn=(ImageButton) newItemView.findViewById(R.id.del_btn);
-        delBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                delTemplateItem(view);
-            }
-        });
-        addPaperTemplate.addView(newItemView);
-        templateItemCount++;
-    }
-    private void delTemplateItem(View view){
-        addPaperTemplate.removeView((View) view.getParent());
-    }
 }
