@@ -42,9 +42,9 @@ public class QuestionAdapter extends ArrayAdapter<Question> {
             view=convertView;
             viewHolder=(ViewHolder) view.getTag();
         }
-        viewHolder.index.setText(String.valueOf(position));
+        viewHolder.index.setText("试题"+String.valueOf(position+1)+"：");
         viewHolder.question_id.setText(String.valueOf(question.getId()));
-        viewHolder.question_descript.setText(question.getDescription());
+        viewHolder.question_descript.setText("  "+question.getDescription());
         viewHolder.question_type.setText(question.getQuestionType());
         viewHolder.question_right_answer.setText(question.getAnswer());
         return view;

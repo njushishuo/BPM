@@ -20,8 +20,15 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.lpp.examinationsystem.model.Label;
+import com.example.lpp.examinationsystem.model.Recruit;
+import com.example.lpp.examinationsystem.model.Template;
 import com.example.lpp.examinationsystem.rest.LabelDAO;
 import com.example.lpp.examinationsystem.rest.PaperDAO;
+import com.example.lpp.examinationsystem.rest.RecruitDAO;
+import com.example.lpp.examinationsystem.rest.TemplateDAO;
+import com.example.lpp.examinationsystem.rest.UserDAO;
+import com.example.lpp.examinationsystem.util.RestUtil;
+import com.example.lpp.examinationsystem.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,16 +43,22 @@ public class AddRequirementActivity extends AppCompatActivity {
     private LinearLayout addPaperTemplate;
     private ImageButton delBtn;
     private Button add;
-
+    private final static int ADD_SUCCESS=1;
+    private final static int UPDATE_LABEL=0;
+    private final static int ADD_FAIL=2;
+    private final static int ADD_TEMPLATE_SUCESS=3;
+    private final static int ADD_TEMPLATE_FAIL=4;
     private List<String> projectTypes=new ArrayList<>();
     private List<String> questionTypes=new ArrayList<>();
+    private String recruit_id;
     //获取的数据
-    private Map<String,Integer> templateData=new HashMap<>();
+    private Map<Label,Integer> templateData=new HashMap<>();
     private String templateDescript;
     private int projectTypeIndex;
+    private int labelCount=0;
     private String projectDescript;
-    private final static int UPDATE_LABEL=0;
-
+    private String owner_id;
+    private  List<Label> labelList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +71,7 @@ public class AddRequirementActivity extends AppCompatActivity {
             @Override
             public void run() {
                 LabelDAO labelDAO=new LabelDAO();
-                List<Label> labelList=(ArrayList)labelDAO.getList();
+                labelList=(ArrayList)labelDAO.getList();
                 for (int i=0;i<labelList.size();i++){
                     questionTypes.add(labelList.get(i).getName().toString());
                 }
@@ -85,23 +98,41 @@ public class AddRequirementActivity extends AppCompatActivity {
                 projectDescript=editText1.getText().toString();
                 System.out.println(projectDescript);
 
-                EditText editText2=(EditText) findViewById(R.id.paper_descrip);
-                templateDescript=editText2.getText().toString();
-                System.out.println(templateDescript);
-
-                for (int i=0;i<addPaperTemplate.getChildCount();i++){
-                    EditText editText3=(EditText) addPaperTemplate.getChildAt(i).findViewById(R.id.question_count);
-                    Spinner question_spinner=(Spinner) addPaperTemplate.getChildAt(i).findViewById(R.id.question_type);
-                    if (question_spinner.isSelected()&&editText3.getText().toString().length()>0)
-                        templateData.put(questionTypes.get(question_spinner.getSelectedItemPosition()),Integer.parseInt(editText3.getText().toString()));
+                EditText project_name=(EditText) findViewById(R.id.project_name);
+                final String projectName= project_name.getText().toString();
+                projectTypeIndex= projectTypeSpinner.getSelectedItemPosition();
+                System.out.println("project name: "+projectName.length());
+                System.out.println("project Type Index: "+projectTypeIndex);
+                if(project_name.length()>0&&projectTypeIndex<3){
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            RecruitDAO recruitDAO=new RecruitDAO();
+                            Recruit newRecuit=new Recruit();
+                            newRecuit.setName(projectName);
+                            newRecuit.setType(projectTypes.get(projectTypeIndex));
+                            UserDAO userDAO=new UserDAO();
+                            newRecuit.setOwnerNickname(userDAO.getObject(owner_id).getNickname());
+                            Recruit res=recruitDAO.postObject(newRecuit);
+                            if (res!=null){
+                                recruit_id=res.getId()+"";
+                                Message message=new Message();
+                                message.what=UPDATE_LABEL;
+                                handler.sendMessage(message);
+                            }else{
+                                Message message=new Message();
+                                message.what=ADD_FAIL;
+                                handler.sendMessage(message);
+                            }
+                        }
+                    }).start();
+                }else {
+                    Toast.makeText(AddRequirementActivity.this,"必须填写项目名称，选择项目类型",Toast.LENGTH_SHORT).show();
                 }
-                System.out.println(templateData);
-                Toast.makeText(AddRequirementActivity.this,"Success",Toast.LENGTH_SHORT).show();
-                Intent intent=new Intent(AddRequirementActivity.this,MainActivity.class);
-                startActivity(intent);
             }
         });
-
+        //获取owner id
+        owner_id="1544682630269";
     }
 
     private Handler handler=new Handler(){
@@ -109,7 +140,20 @@ public class AddRequirementActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case UPDATE_LABEL:
+                    labelCount=questionTypes.size();
                     initSpinner();
+                    break;
+                case ADD_SUCCESS:
+                    addRrcruitSuccessAction();
+                    break;
+                case ADD_FAIL:
+                    addRecruitFaiLAction();
+                    break;
+                case ADD_TEMPLATE_SUCESS:
+                    addTemplateSuccess();
+                    break;
+                case ADD_TEMPLATE_FAIL:
+                    addTemplateFail();
                     break;
                 default:break;
             }
@@ -118,10 +162,9 @@ public class AddRequirementActivity extends AppCompatActivity {
     private void initSpinner(){
         projectTypeSpinner =(Spinner) findViewById(R.id.project_type);
 
-        projectTypes.add("前端");
-        projectTypes.add("后端");
-        projectTypes.add("移动端");
         projectTypes.add("WEB");
+        projectTypes.add("APP");
+        projectTypes.add("WE_CHAT_APPLET");
         projectTypes.add("请选择");
 
         questionTypes.add("请选择");
@@ -206,4 +249,55 @@ public class AddRequirementActivity extends AppCompatActivity {
         addPaperTemplate.removeView(parent);
     }
 
+    private void addRrcruitSuccessAction(){
+        EditText editText2=(EditText) findViewById(R.id.paper_descrip);
+        templateDescript=editText2.getText().toString();
+        System.out.println(templateDescript);
+        if (addPaperTemplate.getChildCount()>0&&templateDescript.length()>0){
+            for (int i=0;i<addPaperTemplate.getChildCount();i++){
+                EditText editText3=(EditText) addPaperTemplate.getChildAt(i).findViewById(R.id.question_count);
+                Spinner question_spinner=(Spinner) addPaperTemplate.getChildAt(i).findViewById(R.id.question_type);
+                if (question_spinner.getSelectedItemPosition()!=labelCount&&editText3.getText().toString().length()>0)
+                    templateData.put(labelList.get(question_spinner.getSelectedItemPosition()),Integer.parseInt(editText3.getText().toString()));
+            }
+            System.out.println(templateData);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    TemplateDAO templateDAO=new TemplateDAO();
+                    Template template=new Template();
+                    template.setRecruitId(recruit_id);
+                    template.setName(templateDescript);
+                    template.setItems(StringUtil.buildTemplateItems(templateData));
+                    if (templateDAO.postObject(template)!=null){
+                        Message message=new Message();
+                        message.what=ADD_TEMPLATE_SUCESS;
+                        handler.sendMessage(message);
+                    }else{
+                        Message message=new Message();
+                        message.what=ADD_TEMPLATE_FAIL;
+                        handler.sendMessage(message);
+                    }
+                }
+            }).start();
+        }else{
+            Toast.makeText(AddRequirementActivity.this,"添加项目成功",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(AddRequirementActivity.this,MainActivity.class);
+            startActivity(intent);
+        }
+    }
+    private void addRecruitFaiLAction(){
+        Toast.makeText(AddRequirementActivity.this,"添加失败，请稍后重试",Toast.LENGTH_SHORT).show();
+    }
+
+    private void addTemplateSuccess(){
+        Toast.makeText(AddRequirementActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(AddRequirementActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
+    private void addTemplateFail(){
+        Toast.makeText(AddRequirementActivity.this,"添加模板失败，添加项目成功",Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(AddRequirementActivity.this,MainActivity.class);
+        startActivity(intent);
+    }
 }

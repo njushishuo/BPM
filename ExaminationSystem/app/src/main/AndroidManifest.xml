@@ -22,7 +22,9 @@
         </activity>
         <activity android:name=".AddRequirementActivity" />
         <activity android:name=".RequirementDetailActivity" />
-        <activity android:name=".PaperDetailActivity"></activity>
+        <activity android:name=".PaperDetailActivity" />
+        <activity android:name=".AddTemplateActivity" />
+        <activity android:name=".TemplateDetailActivity"></activity>
     </application>
 
 </manifest>

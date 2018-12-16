@@ -21,8 +21,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.lpp.examinationsystem.model.Label;
+import com.example.lpp.examinationsystem.model.Recruit;
 import com.example.lpp.examinationsystem.model.Template;
 import com.example.lpp.examinationsystem.rest.LabelDAO;
+import com.example.lpp.examinationsystem.rest.QuestionDAO;
+import com.example.lpp.examinationsystem.rest.RecruitDAO;
+import com.example.lpp.examinationsystem.rest.TemplateDAO;
+import com.example.lpp.examinationsystem.util.RestUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,14 +48,14 @@ public class RequirementDetailActivity extends AppCompatActivity {
     private ImageButton menuBtn;
     private Button outputBtn;
     private ListView listView;
-
-    private static final String []projectType={"前端","后端","移动端","WEB"};
+    private int addInvalidLabel=1;//0:不添加请选择；1：添加请选择
+    private static final String []projectType={"WEB","APP","WE_CHAT_APPLET"};
     private static int templateItemCount=0;
+    private static final int UPDATE_TEMPLATE=0;
     private static final int UPDATE_LABEL=1;
     private static final int SAVE=2;
     private List<String> questionTypes=new ArrayList<>();
     private List<String> menuList=new ArrayList<>();
-    private Map<Integer,Integer> spinnerPositions=new HashMap<>();
 
     //获取的数据
     private Map<String,Integer> templateData=new HashMap<>();
@@ -76,22 +81,27 @@ public class RequirementDetailActivity extends AppCompatActivity {
         name=intent.getStringExtra("project name");
         type=intent.getStringExtra("project type");
         des=intent.getStringExtra("project description");
-        templateList=(List<Template>) intent.getSerializableExtra("paper frame");
-        Template template=templateList.get(0);
-//        Log.d("Paper Frame",template.toString());
-
         topTab=(TextView) findViewById(R.id.txt_top);
         topTab.setText(name);
         menuBtn=(ImageButton) findViewById(R.id.menu_btn);
         editProjectDes=(EditText) findViewById(R.id.project_descrip);
         editProjectDes.setText(des);
         editPaperDes=(EditText) findViewById(R.id.paper_descrip);
-        editPaperDes.setText(template.getName());
         addPaperTemplate=(LinearLayout) findViewById(R.id.add_paper_template);
         addQuestionTemplate=findViewById(R.id.add_template_button);
+        initSpinner();
         new Thread(new Runnable() {
             @Override
             public void run() {
+                //获取项目的template
+                RecruitDAO recruitDAO=new RecruitDAO();
+//                System.out.println(recruitDAO.getObject(id));
+                templateList=new ArrayList<>();
+                templateList=RestUtil.getTemplatesByRecruit(recruitDAO.getObject(id));
+                Message message1=new Message();
+                message1.what=UPDATE_TEMPLATE;
+                handler.sendMessage(message1);
+                //获取标签
                 LabelDAO labelDAO=new LabelDAO();
                 labelList=new ArrayList<>();
                 labelList=(ArrayList) labelDAO.getList();
@@ -109,27 +119,29 @@ public class RequirementDetailActivity extends AppCompatActivity {
                     addTemplateItem();
                 }
         });
+        initListView();
+        listView.setVisibility(View.GONE);
+        menuBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listView.getVisibility()==View.GONE){
+                    listView.setVisibility(View.VISIBLE);
+                    listView.bringToFront();
+                }else{
+                    listView.setVisibility(View.GONE);
+                }
+            }
+        });
     }
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case UPDATE_LABEL:
-                    initSpinner();
+                    break;
+                case UPDATE_TEMPLATE:
+                    System.out.println("templateList:"+templateList);
                     initTemplate();
-                    initListView();
-                    listView.setVisibility(View.GONE);
-                    menuBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (listView.getVisibility()==View.GONE){
-                                listView.setVisibility(View.VISIBLE);
-                                listView.bringToFront();
-                            }else{
-                                listView.setVisibility(View.GONE);
-                            }
-                        }
-                    });
                     break;
                 default:break;
             }
@@ -160,8 +172,27 @@ public class RequirementDetailActivity extends AppCompatActivity {
 //                        System.out.println(templateData);
                         projectTypeIndex=projectTypeSpinner.getSelectedItemPosition();
 //                        System.out.println(projectTypeIndex);
-                        Toast.makeText(RequirementDetailActivity.this,"Successfully save",Toast.LENGTH_SHORT).show();
-                        listView.setVisibility(View.GONE);
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                RecruitDAO recruitDAO=new RecruitDAO();
+                                Recruit newRecruit=new Recruit();
+                                newRecruit=recruitDAO.getObject(id);
+                                newRecruit.setType(projectType[projectTypeIndex]);
+                                newRecruit.setDescription(des);
+//                                Recruit res=recruitDAO.putObject(newRecruit);
+//                                if (res==null){
+//                                    Toast.makeText(RequirementDetailActivity.this,"save fail",Toast.LENGTH_SHORT).show();
+//                                    listView.setVisibility(View.GONE);
+//                                }else{
+                                    TemplateDAO templateDAO=new TemplateDAO();
+                                    System.out.println(templateDAO.getTemplatesByRecruit(id));
+//                                    Toast.makeText(RequirementDetailActivity.this,"Successfully save",Toast.LENGTH_SHORT).show();
+//                                    listView.setVisibility(View.GONE);
+//                                }
+                            }
+                        }).start();
+
                         break;
                     case 1://删除项目
                         Toast.makeText(RequirementDetailActivity.this,"Successfully delete",Toast.LENGTH_SHORT).show();
@@ -175,10 +206,9 @@ public class RequirementDetailActivity extends AppCompatActivity {
     }
     private void initSpinner(){
         projectTypeSpinner =(Spinner) findViewById(R.id.project_type);
-        questionTypes.add("请选择");
         ArrayAdapter<String> adapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,projectType);
         projectTypeSpinner.setAdapter(adapter);
-        for (int i=0;i<4;i++)
+        for (int i=0;i<3;i++)
             if (type.equals(projectType[i]))
                 projectTypeIndex=i;
         projectTypeSpinner.setSelection(projectTypeIndex);
@@ -186,7 +216,6 @@ public class RequirementDetailActivity extends AppCompatActivity {
     }
 
     private void initTemplate(){
-        // TODO
 //        List<TemplateItem> templateItems=new ArrayList<>();
 //        templateItems=templateList.get(0).getItemsInfo();
 //        templateItemCount=templateItems.size();
@@ -265,6 +294,10 @@ public class RequirementDetailActivity extends AppCompatActivity {
     private void addTemplateItem(){
         if (addPaperTemplate.getChildCount()==7){
             return;
+        }
+        if (addInvalidLabel==1){
+            questionTypes.add("请选择");
+            addInvalidLabel=0;
         }
         View newItemView=View.inflate(this,R.layout.item_add_template,null);
         questionTypeSpinner=(Spinner) newItemView.findViewById(R.id.question_type);

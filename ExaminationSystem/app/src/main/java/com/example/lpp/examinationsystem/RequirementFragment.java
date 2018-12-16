@@ -47,6 +47,12 @@ public class RequirementFragment extends ListFragment implements Serializable {
         initXuqiu();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.notifyDataSetChanged();
+    }
+
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -84,14 +90,10 @@ public class RequirementFragment extends ListFragment implements Serializable {
         Recruit item=recruitList.get(position);
         String project_name=item.getName();
         Intent intent=new Intent(getActivity(),RequirementDetailActivity.class);
-        intent.putExtra("project id",item.getId());
+        intent.putExtra("project id",item.getId()+"");
         intent.putExtra("project name",project_name);
         intent.putExtra("project type",item.getType());
         intent.putExtra("project description",item.getDescription());
-        ArrayList<Template> paperFrame=new ArrayList<>();
-        // TODO
-//        paperFrame=(ArrayList<Template>) item.getPaperframe();
-//        intent.putExtra("paper frame",(Serializable) paperFrame);
         startActivity(intent);
     }
 }

@@ -40,7 +40,7 @@ public class PaperAdapter extends ArrayAdapter<Paper> {
         TextView paper_description=(TextView) view.findViewById(R.id.paper_description);
         paper_id.setText(String.valueOf(paper.getId()));
         paper_description.setText(paper.getName());
-        project_name.setText(String.valueOf(RestUtil.getRecruitInfo(paper).getName()));
+        project_name.setText(paper.getRecruitId());
 //        RecruitDAO recruitDAO=new RecruitDAO();
 //        String recruitid=String.valueOf(paper.getRecruitid());
 //        Recruit recruit=recruitDAO.getObject(recruitid);
@@ -48,5 +48,4 @@ public class PaperAdapter extends ArrayAdapter<Paper> {
 //        project_name.setText(recruit.getName());
         return view;
     }
-
 }

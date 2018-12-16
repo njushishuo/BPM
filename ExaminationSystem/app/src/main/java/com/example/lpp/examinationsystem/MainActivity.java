@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -33,10 +34,8 @@ public class MainActivity extends AppCompatActivity {
         if (actionBar!=null){
             actionBar.hide();
         }
-
         bindView();
     }
-
     //UI组件初始化与事件绑定
     private void bindView() {
         topBar = (TextView)this.findViewById(R.id.txt_top);
