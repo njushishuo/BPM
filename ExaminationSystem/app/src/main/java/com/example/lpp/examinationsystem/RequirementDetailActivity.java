@@ -139,6 +139,19 @@ public class RequirementDetailActivity extends AppCompatActivity {
                     params.height = totalHeight + (templateListView.getDividerHeight() * (adapter.getCount()-1));
                     ((ViewGroup.MarginLayoutParams)params).setMargins(10, 10, 10, 10);
                     templateListView.setLayoutParams(params);
+                    templateListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                            Intent intent=new Intent(RequirementDetailActivity.this,TemplateDetailActivity.class);
+                            intent.putExtra("template id",templateList.get(i).getId()+"");
+                            intent.putExtra("template name",templateList.get(i).getName());
+                            intent.putExtra("recruitId",id);
+                            intent.putExtra("project type",type);
+                            intent.putExtra("project description",des);
+                            intent.putExtra("project name",name);
+                            startActivityForResult(intent,1);
+                        }
+                    });
                     break;
                 case SAVE_SUCCESS:
                     Toast.makeText(RequirementDetailActivity.this,"保存成功",Toast.LENGTH_SHORT).show();
