@@ -1,12 +1,14 @@
 package com.example.lpp.examinationsystem;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,12 +109,42 @@ public class RequirementDetailActivity extends AppCompatActivity {
         addTemplate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1=new Intent(RequirementDetailActivity.this,AddTemplateActivity.class);
-                intent1.putExtra("recruitId",id);
-                intent1.putExtra("project type",type);
-                intent1.putExtra("project description",des);
-                intent1.putExtra("project name",name);
-                startActivityForResult(intent1,1);
+                //初始化字符串数组
+                final String[] strArray = new String[]{"查看推荐模板","自定义"};
+                final AlertDialog.Builder builder = new AlertDialog.Builder(RequirementDetailActivity.this);//实例化builder
+                builder.setTitle("选择添加模板方式");//设置标题
+                //设置单选列表
+                builder.setItems(strArray,  new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which){
+                            case 0:
+                                Toast.makeText(RequirementDetailActivity.this,"此功能暂时没有实现",Toast.LENGTH_SHORT).show();
+                                break;
+                            case 1:
+                                Intent intent1=new Intent(RequirementDetailActivity.this,AddTemplateActivity.class);
+                                intent1.putExtra("recruitId",id);
+                                intent1.putExtra("project type",type);
+                                intent1.putExtra("project description",des);
+                                intent1.putExtra("project name",name);
+                                startActivityForResult(intent1,1);
+                                break;
+                            default:break;
+                        }
+                    }
+                });
+                //创建对话框
+                AlertDialog dialog = builder.create();
+
+                //设置确定按钮
+                dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();//关闭对话框
+                    }
+                });
+                dialog.show();//显示对话框
+
             }
         });
     }

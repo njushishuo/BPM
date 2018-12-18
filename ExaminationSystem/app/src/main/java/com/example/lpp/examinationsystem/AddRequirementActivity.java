@@ -43,6 +43,7 @@ public class AddRequirementActivity extends AppCompatActivity {
     private LinearLayout addPaperTemplate;
     private ImageButton delBtn;
     private Button add;
+    private EditText editText1;
     private final static int ADD_SUCCESS=1;
     private final static int UPDATE_LABEL=0;
     private final static int ADD_FAIL=2;
@@ -89,12 +90,13 @@ public class AddRequirementActivity extends AppCompatActivity {
                 addTemplateItem();
             }
         });
-
+        //获取owner id
+        owner_id="1544682630269";
         add=(Button) findViewById(R.id.add_xuqiu_button);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText editText1=(EditText) findViewById(R.id.project_descrip);
+                editText1=(EditText) findViewById(R.id.project_descrip);
                 projectDescript=editText1.getText().toString();
                 System.out.println(projectDescript);
 
@@ -112,12 +114,14 @@ public class AddRequirementActivity extends AppCompatActivity {
                             newRecuit.setName(projectName);
                             newRecuit.setType(projectTypes.get(projectTypeIndex));
                             UserDAO userDAO=new UserDAO();
+                            newRecuit.setOwnerId(owner_id);
+                            newRecuit.setDescription(editText1.getText().toString());
                             newRecuit.setOwnerNickname(userDAO.getObject(owner_id).getNickname());
                             Recruit res=recruitDAO.postObject(newRecuit);
                             if (res!=null){
                                 recruit_id=res.getId()+"";
                                 Message message=new Message();
-                                message.what=UPDATE_LABEL;
+                                message.what=ADD_SUCCESS;
                                 handler.sendMessage(message);
                             }else{
                                 Message message=new Message();
@@ -131,8 +135,6 @@ public class AddRequirementActivity extends AppCompatActivity {
                 }
             }
         });
-        //获取owner id
-        owner_id="1544682630269";
     }
 
     private Handler handler=new Handler(){
@@ -260,7 +262,7 @@ public class AddRequirementActivity extends AppCompatActivity {
                 if (question_spinner.getSelectedItemPosition()!=labelCount&&editText3.getText().toString().length()>0)
                     templateData.put(labelList.get(question_spinner.getSelectedItemPosition()),Integer.parseInt(editText3.getText().toString()));
             }
-            System.out.println(templateData);
+//            System.out.println(templateData);
             new Thread(new Runnable() {
                 @Override
                 public void run() {
