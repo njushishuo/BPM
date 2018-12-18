@@ -12,21 +12,23 @@
             android:layout_height="wrap_content"
             android:id="@+id/id_text"
             android:textColor="@color/tab_text_black"
-            android:text="试卷ID:"
-            android:textSize="20sp" />
+            android:text="ID:"
+            android:textSize="18sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/paper_id"
             android:textColor="@color/tab_text_black"
-            android:textSize="20sp"
-            android:layout_toRightOf="@id/id_text"/>
+            android:textSize="18sp"
+            android:layout_toRightOf="@id/id_text"
+            android:layout_toLeftOf="@id/first_line_right"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="15dp"
-            android:layout_marginTop="5dp">
+            android:layout_marginTop="5dp"
+            android:id="@+id/first_line_right">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

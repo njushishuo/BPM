@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.lpp.examinationsystem.model.Label;
 import com.example.lpp.examinationsystem.model.Recruit;
+import com.example.lpp.examinationsystem.model.Template;
 import com.example.lpp.examinationsystem.rest.LabelDAO;
 import com.example.lpp.examinationsystem.rest.RecruitDAO;
 import com.example.lpp.examinationsystem.rest.TemplateDAO;
@@ -31,6 +32,8 @@ import com.example.lpp.examinationsystem.util.RestUtil;
 import com.example.lpp.examinationsystem.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -47,11 +50,14 @@ public class TemplateDetailActivity extends AppCompatActivity {
     private List<String> questionTypes=new ArrayList<>();
     private static final int UPDATE_LABEL=1;
     private static final int INIT_TEMPLATE=2;
+    private static final int SAVE_TEMPLATE_SUCCESS=3;
+    private static final int SAVE_TEMPLATE_FAIL=4;
     private String templateDescript;
     private List<Label> labelList;
     private int addInvalidLabel=1;//0:不添加请选择；1：添加请选择
     private List<String> menuList=new ArrayList<>();
     private Map<Label,Integer> templateItems;
+    private Map<Label,Integer> newTemplateItems;
 
     private String recruitId;
     private String type;
@@ -210,6 +216,19 @@ public class TemplateDetailActivity extends AppCompatActivity {
             return i>0?i-1:i;
         }
     }
+    private void saveTemplateSuccess(){
+        Toast.makeText(TemplateDetailActivity.this,"保存模板成功",Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent();
+        intent.putExtra("project type",type);
+        intent.putExtra("project id",recruitId);
+        intent.putExtra("project description",des);
+        intent.putExtra("project name",recruitName);
+        setResult(RESULT_OK,intent);
+        finish();
+    }
+    private void saveTemplateFail(){
+        Toast.makeText(TemplateDetailActivity.this,"保存模板失败，请稍后重试",Toast.LENGTH_SHORT).show();
+    }
     private Handler handler=new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -218,6 +237,12 @@ public class TemplateDetailActivity extends AppCompatActivity {
                     break;
                 case INIT_TEMPLATE:
                     initTemplateItems();
+                    break;
+                case SAVE_TEMPLATE_SUCCESS:
+                    saveTemplateSuccess();
+                    break;
+                case SAVE_TEMPLATE_FAIL:
+                    saveTemplateFail();
                     break;
                 default:break;
             }
@@ -236,6 +261,38 @@ public class TemplateDetailActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i){
                     case 0://保存修改
+                        if (editPaperDes.getText().length()>0&&paperTemplate.getChildCount()>0){
+                            new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    TemplateDAO templateDAO=new TemplateDAO();
+                                    Template newTemplate=new Template();
+                                    newTemplateItems=new HashMap<>();
+                                    newTemplate.setRecruitId(recruitId);
+                                    newTemplate.setId(Long.valueOf(templateId));
+                                    newTemplate.setName(editPaperDes.getText().toString());
+                                    for (int i=0;i<paperTemplate.getChildCount();i++){
+                                        Spinner itemSpinner=(Spinner) paperTemplate.getChildAt(i).findViewById(R.id.question_type);
+                                        EditText itemCount=(EditText) paperTemplate.getChildAt(i).findViewById(R.id.question_count);
+                                        System.out.println(labelList.get(itemSpinner.getSelectedItemPosition())+" "+itemCount.getText().toString());
+                                        newTemplateItems.put(labelList.get(itemSpinner.getSelectedItemPosition()),Integer.parseInt(itemCount.getText().toString()));
+                                    }
+                                    newTemplate.setItems(StringUtil.buildTemplateItems(newTemplateItems));
+                                    Template res=templateDAO.putObject(newTemplate);
+                                    if (res!=null){
+                                        Message message=new Message();
+                                        message.what=SAVE_TEMPLATE_SUCCESS;
+                                        handler.sendMessage(message);
+                                    }else {
+                                        Message message=new Message();
+                                        message.what=SAVE_TEMPLATE_FAIL;
+                                        handler.sendMessage(message);
+                                    }
+                                }
+                            }).start();
+                        }else {
+                            Toast.makeText(TemplateDetailActivity.this,"必须填写试卷描述，正确设置模板",Toast.LENGTH_SHORT).show();
+                        }
                         listView.setVisibility(View.GONE);
                         break;
                     case 1://删除项目

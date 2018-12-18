@@ -44,7 +44,6 @@ public class RequirementFragment extends ListFragment implements Serializable {
         recruitList = new ArrayList<>();
         adapter= new RequirementAdapter(getContext(),R.layout.xuqiu_item,recruitList);
         RequirementFragment.this.setListAdapter(adapter);
-//        initXuqiu();
     }
 
     @Override

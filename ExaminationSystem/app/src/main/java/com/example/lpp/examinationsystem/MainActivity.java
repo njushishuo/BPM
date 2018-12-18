@@ -3,6 +3,7 @@ package com.example.lpp.examinationsystem;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
     private FrameLayout ly_content;
 
-    private RequirementFragment f1;
-    private PaperFragment f2;
-    private AccountFragment f3;
+    private RequirementFragment f1,f11;
+    private PaperFragment f2,f22;
+    private AccountFragment f3,f33;
     private FragmentManager fragmentManager;
     private ImageButton addRequirement;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         }
         bindView();
     }
+
     //UI组件初始化与事件绑定
     private void bindView() {
         topBar = (TextView)this.findViewById(R.id.txt_top);
