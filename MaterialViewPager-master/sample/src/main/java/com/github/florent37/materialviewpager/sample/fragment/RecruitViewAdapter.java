@@ -76,6 +76,12 @@ public class RecruitViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public int getCircleRes(Recruit recruit) {
-        return R.drawable.recruit_type2;
+        if (recruit.getType().equals("WEB")){
+            return R.drawable.recruit_type1;
+        }else if (recruit.getType().equals("APP")){
+            return R.drawable.recruit_type2;
+        }else{
+            return R.drawable.recruit_type3;
+        }
     }
 }
