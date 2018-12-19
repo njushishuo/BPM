@@ -9,6 +9,11 @@
     <color name="statusBarColor">@color/blue</color>
     <color name="navigationBarColor">@android:color/black</color>
     <color name="drawerArrowColor">@android:color/white</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="tab_text_black">#2c2c2c</color>
+    <color name="tab_text_grey">#bfbfbf</color>
+    <color name="template_list_view_bg">#EFEFEF</color>
+    <color name="transparent">#01000000</color>
 
     <color name="B1Color1">#00BACA</color>
     <color name="B1Color2">#00BACA</color>

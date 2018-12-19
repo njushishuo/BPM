@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.crashlytics.android.Crashlytics;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 import com.github.florent37.materialviewpager.header.HeaderDesign;
+import com.github.florent37.materialviewpager.sample.fragment.PaperFragment;
 import com.github.florent37.materialviewpager.sample.fragment.RecruitFragment;
 import com.github.florent37.materialviewpager.sample.fragment.RecyclerViewFragment;
 
@@ -46,8 +47,8 @@ public class MainActivity extends DrawerActivity {
                 switch (position % 4) {
                     case 0:
                         return RecruitFragment.newInstance();
-                    //case 1:
-                    //    return RecyclerViewFragment.newInstance();
+                    case 1:
+                        return PaperFragment.newInstance();
                     //case 2:
                     //    return WebViewFragment.newInstance();
                     default:
