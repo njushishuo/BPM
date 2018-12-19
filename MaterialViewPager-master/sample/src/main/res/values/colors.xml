@@ -9,4 +9,25 @@
     <color name="statusBarColor">@color/blue</color>
     <color name="navigationBarColor">@android:color/black</color>
     <color name="drawerArrowColor">@android:color/white</color>
+
+    <color name="B1Color1">#00BACA</color>
+    <color name="B1Color2">#00BACA</color>
+    <color name="B1Color3">#00A288</color>
+    <color name="B1Color4">#475061</color>
+    <color name="B1Color5">#979797</color>
+    <color name="B1Color6">#D6D6D6</color>
+    <color name="B1Color7">#EFEFF4</color>
+    <color name="B1Color9">#00a38a</color>
+    <color name="B1Color10">#f1f1f1</color>
+    <color name="B1Color11">#3aaf9f</color>
+    <color name="B1Color12">#F4F4F4</color>
+    <color name="clearColor">#FFFFFF</color>
+
+    <color name="B1ColorSC1">#D0021B</color>
+    <color name="B1ColorSC2">#EA5607</color>
+    <color name="B1ColorSC3">#FB7787</color>
+    <color name="B1ColorSC4">#F5A623</color>
+    <color name="B1ColorSC5">#0FA1DF</color>
+    <color name="B1ColorSC6">#6AB129</color>
+    <color name="B1ColorSC7">#FF3B30</color>
 </resources>
