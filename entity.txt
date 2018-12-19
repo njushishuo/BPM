@@ -5,9 +5,9 @@ Recruit:
 Template: 
     1. 取消了TemplateItem表
 	2. items 记录了该模板的所有试题标签以及数目
- 		e.g: labelId1,labelId2,3;labelId3,5;labelId4,2
+ 		e.g: labelId1,3;labelId3,5;labelId4,2
 		表示一共有三种试题：
-		(label1,label2,3), 最后一位表示该题型的数量
+		(label1,3), 最后一位表示该题型的数量
 		(label3,5),
 		(label4,2)
 
