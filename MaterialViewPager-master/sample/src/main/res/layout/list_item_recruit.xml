@@ -63,6 +63,14 @@
                 android:layout_below="@+id/first_line"
                 android:layout_marginHorizontal="10dp">
 
+                <ImageView
+                    android:id="@+id/image"
+                    style="@style/tint_primary_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:background="@drawable/recruit_type2"
+                    android:layout_marginLeft="5dp"/>
+
                 <TextView
                     android:id="@+id/project_descrip"
                     android:layout_width="match_parent"
@@ -82,13 +90,6 @@
                     android:layout_height="wrap_content"
                     android:text="项目类型:"
                     android:textSize="10sp" />
-                <ImageView
-                    android:id="@+id/image"
-                    style="@style/tint_primary_icon"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
-                    android:background="@drawable/recruit_type2"
-                    android:layout_marginLeft="5dp"/>
 
                 <TextView
                     android:id="@+id/project_type"

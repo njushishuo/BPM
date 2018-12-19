@@ -65,7 +65,17 @@ public class RecruitViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 TextView descript = (TextView) view.findViewById(R.id.project_descrip);
                 TextView project_id = (TextView) view.findViewById(R.id.project_id);
                 project_name.setText(recruit.getName());
-                project_type.setText(recruit.getType());
+                switch (recruit.getType()) {
+                    case "WEB":
+                        project_type.setText("网页开发");
+                        break;
+                    case "APP":
+                        project_type.setText("移动开发");
+                        break;
+                    default:
+                        project_type.setText("小程序开发");
+                        break;
+                }
                 publisher.setText(recruit.getOwnerNickname());
                 descript.setText("    " + recruit.getDescription());
                 project_id.setText(String.valueOf(recruit.getId()));
@@ -76,11 +86,11 @@ public class RecruitViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public int getCircleRes(Recruit recruit) {
-        if (recruit.getType().equals("WEB")){
+        if (recruit.getType().equals("WEB")) {
             return R.drawable.recruit_type1;
-        }else if (recruit.getType().equals("APP")){
+        } else if (recruit.getType().equals("APP")) {
             return R.drawable.recruit_type2;
-        }else{
+        } else {
             return R.drawable.recruit_type3;
         }
     }
