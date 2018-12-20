@@ -10,13 +10,13 @@
         android:text="类型"
         android:gravity="center"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="15dp"
-        android:textSize="15sp"/>
+        android:layout_marginLeft="10dp"
+        android:textSize="13sp"/>
     <Spinner
-        android:layout_width="120dp"
+        android:layout_width="170dp"
         android:layout_height="30dp"
         android:layout_marginVertical="5dp"
-        android:layout_marginHorizontal="10dp"
+        android:layout_marginHorizontal="5dp"
         android:layout_weight="1"
         android:id="@+id/question_type">
     </Spinner>
@@ -24,13 +24,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="数目 "
+        android:text="数目"
         android:gravity="right"
         android:layout_gravity="center_vertical"
-        android:textSize="15sp"/>
+        android:textSize="13sp"/>
     <EditText
-        android:layout_width="30dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_marginVertical="5dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1"
@@ -38,11 +38,27 @@
         android:background="@drawable/edit_bg"
         android:id="@+id/question_count">
     </EditText>
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/delete"
-        android:background="@color/transparent"
-        android:layout_gravity="center_vertical"
-        android:id="@+id/del_btn"/>
+    <!--<ImageButton-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:src="@drawable/delete"-->
+        <!--android:background="@color/transparent"-->
+        <!--android:layout_gravity="center_vertical"-->
+        <!--android:id="@+id/del_btn"/>-->
+    <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="48dp"
+        android:layout_height="48dp" >
+
+        <at.markushi.ui.CircleButton
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:src="@drawable/minus"
+            app:cb_color="#FF3333"
+            app:cb_pressedRingWidth="8dip"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/del_btn"/>
+
+    </FrameLayout>
 </LinearLayout>

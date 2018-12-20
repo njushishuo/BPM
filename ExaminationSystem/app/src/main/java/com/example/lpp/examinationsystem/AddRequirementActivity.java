@@ -1,5 +1,6 @@
 package com.example.lpp.examinationsystem;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -35,14 +36,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AddRequirementActivity extends AppCompatActivity {
+public class AddRequirementActivity extends AppCompatActivity{
 
     private Spinner projectTypeSpinner;
     private Spinner questionTypeSpinner;
-    private ImageButton addQuestionTemplate;
+    private at.markushi.ui.CircleButton addQuestionTemplate;
     private LinearLayout addPaperTemplate;
-    private ImageButton delBtn;
-    private Button add;
+    private at.markushi.ui.CircleButton delBtn;
+    private com.beardedhen.androidbootstrap.BootstrapButton add;
     private EditText editText1;
     private final static int ADD_SUCCESS=1;
     private final static int UPDATE_LABEL=0;
@@ -92,7 +93,7 @@ public class AddRequirementActivity extends AppCompatActivity {
         });
         //获取owner id
         owner_id="1544682630269";
-        add=(Button) findViewById(R.id.add_xuqiu_button);
+        add=(com.beardedhen.androidbootstrap.BootstrapButton) findViewById(R.id.add_xuqiu_button);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -237,7 +238,7 @@ public class AddRequirementActivity extends AppCompatActivity {
         questionTypeSpinner.setAdapter(adapter2);
         questionTypeSpinner.setSelection(questionTypes.size()-1,true);
         questionTypeSpinner.setOnItemSelectedListener(new questionTypeSpinnerListener());
-        delBtn=(ImageButton) newItemView.findViewById(R.id.del_btn);
+        delBtn=(at.markushi.ui.CircleButton) newItemView.findViewById(R.id.del_btn);
         delBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,7 +248,7 @@ public class AddRequirementActivity extends AppCompatActivity {
         addPaperTemplate.addView(newItemView);
     }
     private void delTemplateItem(View view){
-        View parent=(View) view.getParent();
+        View parent=(View) view.getParent().getParent();
         addPaperTemplate.removeView(parent);
     }
 

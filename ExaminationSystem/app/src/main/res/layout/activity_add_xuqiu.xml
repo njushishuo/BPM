@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AddRequirementActivity">
 
     <RelativeLayout
@@ -26,13 +27,27 @@
             android:text="添加需求" />
     </RelativeLayout>
 
-    <Button
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="50dp"-->
+        <!--android:text="添加"-->
+        <!--android:textSize="18sp"-->
+        <!--android:id="@+id/add_xuqiu_button"-->
+        <!--android:layout_alignParentBottom="true"/>-->
+    <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:text="添加"
-        android:textSize="18sp"
+        app:bootstrapBrand="success"
+        app:bootstrapSize="lg"
+        app:buttonMode="regular"
+        app:showOutline="false"
+        app:roundedCorners="true"
         android:id="@+id/add_xuqiu_button"
-        android:layout_alignParentBottom="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginVertical="2dp"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -63,7 +78,24 @@
                     android:id="@+id/project_name"
                     android:gravity="start"
                     android:textSize="15sp"/>
+                <!--<com.github.florent37.materialtextfield.MaterialTextField-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--app:mtf_labelColor="#666"-->
+                    <!--app:mtf_image="@drawable/save"-->
+                    <!--android:layout_marginHorizontal="10dp">-->
+
+                    <!--<EditText-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:hint="项目名称"-->
+                        <!--android:textColor="#333"-->
+                        <!--android:textSize="15sp"-->
+                        <!--android:id="@+id/project_name"/>-->
+
+                <!--</com.github.florent37.materialtextfield.MaterialTextField>-->
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -103,6 +135,7 @@
                     android:layout_marginVertical="5dp"
                     android:layout_marginHorizontal="20dp"
                     android:background="@color/transparent" />
+
             </LinearLayout>
             <EditText
                 android:layout_width="match_parent"
@@ -114,6 +147,7 @@
                 android:gravity="start"
                 android:textSize="15sp"
                 android:id="@+id/project_descrip"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -143,15 +177,30 @@
                     android:id="@+id/add_paper_template"
                     android:orientation="vertical">
                 </LinearLayout>
-                <ImageButton
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:src="@drawable/plus2"
-                    android:layout_gravity="center"
-                    android:background="@color/transparent"
-                    android:layout_marginBottom="10dp"
-                    android:id="@+id/add_template_button"/>
+                <!--<ImageButton-->
+                    <!--android:layout_width="32dp"-->
+                    <!--android:layout_height="32dp"-->
+                    <!--android:src="@drawable/plus2"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:background="@color/transparent"-->
+                    <!--android:layout_marginBottom="10dp"-->
+                    <!--android:id="@+id/add_template_button"/>-->
+                <FrameLayout
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
 
+                    <at.markushi.ui.CircleButton
+                        android:layout_width="52dp"
+                        android:layout_height="52dp"
+                        android:src="@drawable/add_1"
+                        app:cb_color="#99CC00"
+                        app:cb_pressedRingWidth="8dip"
+                        android:id="@+id/add_template_button"
+                        android:layout_gravity="center"/>
+
+                </FrameLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -188,6 +237,7 @@
                         android:textSize="15sp"
                         android:id="@+id/paper_descrip"/>
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
