@@ -1,5 +1,6 @@
 package com.github.florent37.materialviewpager.sample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -27,6 +28,7 @@ public class MainActivity extends DrawerActivity {
 
     @BindView(R.id.materialViewPager)
     MaterialViewPager mViewPager;
+    com.getbase.floatingactionbutton.AddFloatingActionButton addRecruit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,5 +120,14 @@ public class MainActivity extends DrawerActivity {
                 }
             });
         }
+
+        addRecruit = (com.getbase.floatingactionbutton.AddFloatingActionButton) findViewById(R.id.normal_plus);
+        addRecruit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(MainActivity.this,AddRecruitActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
