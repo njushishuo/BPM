@@ -73,8 +73,7 @@ public class PaperViewAdapter extends RecyclerView.Adapter<PaperViewHolder> {
                 TextView project_name = (TextView) view.findViewById(R.id.project_name);
                 project_name.setText(paper.getRecruit().getName());
                 TextView questions_text = (TextView) view.findViewById(R.id.questions);
-//                questions_text.setText(paper.analysisInfo());
-                questions_text.setText(" ");
+                questions_text.setText(paper.analysisInfo());
                 break;
         }
     }
