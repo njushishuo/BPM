@@ -8,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +15,11 @@ import android.view.ViewGroup;
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.github.florent37.materialviewpager.sample.R;
 import com.github.florent37.materialviewpager.sample.model.Paper;
-import com.github.florent37.materialviewpager.sample.model.Question;
-import com.github.florent37.materialviewpager.sample.model.Recruit;
+import com.github.florent37.materialviewpager.sample.model.PaperVO;
 import com.github.florent37.materialviewpager.sample.rest.DAOFactory;
-import com.github.florent37.materialviewpager.sample.util.RestUtil;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,14 +66,11 @@ public class PaperFragment extends Fragment {
             @Override
             public void run() {
                 List<Paper> papers = DAOFactory.getPaperDAO().getList();
-                Map<Paper, Pair<Recruit, List<Question>>> map = new HashMap<>();
+                List<PaperVO> contents = new ArrayList<>();
                 for (Paper paper : papers) {
-                    Recruit recruit = RestUtil.getRecruitInfo(paper);
-                    List<Question> questions = RestUtil.getQuestionsInfo(paper);
-                    map.put(paper, new Pair<Recruit, List<Question>>(recruit, questions));
+                    contents.add(new PaperVO(paper));
                 }
-                adapter.papers = papers;
-                adapter.contents = map;
+                adapter.papers = contents;
                 Message message = new Message();
                 message.what = UPDATE_LIST;
                 handler.sendMessage(message);
