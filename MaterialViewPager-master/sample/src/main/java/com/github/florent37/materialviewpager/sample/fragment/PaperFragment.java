@@ -101,6 +101,7 @@ public class PaperFragment extends Fragment {
 //        Log.d("PaperFragment",String.valueOf(paper_id));
                 Intent intent=new Intent(getActivity(),QuestionListActivity.class);
                 intent.putExtra("paper id",String.valueOf(paper_id));
+                intent.putExtra("paper name",item.getName());
                 startActivity(intent);
             }
         });

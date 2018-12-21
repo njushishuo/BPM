@@ -48,7 +48,7 @@
         android:layout_alignParentBottom="true"
         app:bootstrapText="添加"
         android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="3dp" />
+        android:layout_marginVertical="3dp"/>
 
     <ScrollView
         android:layout_width="match_parent"

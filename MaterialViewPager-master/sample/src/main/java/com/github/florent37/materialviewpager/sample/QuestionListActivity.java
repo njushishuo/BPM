@@ -35,7 +35,7 @@ public class QuestionListActivity extends AppCompatActivity {
         Intent intent=getIntent();
         id=intent.getStringExtra("paper id");
 //        System.out.println(id);
-        tabText.setText(id);
+        tabText.setText(intent.getStringExtra("paper name"));
         //初始化试题列表数据
         initQustionData();
         adapter=new QuestionAdapter(QuestionListActivity.this,R.layout.question_item,question_list);

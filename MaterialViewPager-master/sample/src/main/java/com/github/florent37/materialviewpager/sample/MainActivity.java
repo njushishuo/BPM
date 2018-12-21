@@ -85,16 +85,16 @@ public class MainActivity extends DrawerActivity {
                 switch (page) {
                     case 0:
                         return HeaderDesign.fromColorResAndUrl(
-                            R.color.green,
-                            "http://phandroid.s3.amazonaws.com/wp-content/uploads/2014/06/android_google_moutain_google_now_1920x1080_wallpaper_Wallpaper-HD_2560x1600_www.paperhi.com_-640x400.jpg");
+                                R.color.green,
+                                "http://phandroid.s3.amazonaws.com/wp-content/uploads/2014/06/android_google_moutain_google_now_1920x1080_wallpaper_Wallpaper-HD_2560x1600_www.paperhi.com_-640x400.jpg");
                     case 1:
                         return HeaderDesign.fromColorResAndUrl(
-                            R.color.blue,
-                            "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
+                                R.color.blue,
+                                "http://www.tothemobile.com/wp-content/uploads/2014/07/original.jpg");
                     case 2:
                         return HeaderDesign.fromColorResAndUrl(
-                            R.color.cyan,
-                            "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
+                                R.color.cyan,
+                                "http://www.droid-life.com/wp-content/uploads/2014/10/lollipop-wallpapers10.jpg");
 //                    case 3:
 //                        return HeaderDesign.fromColorResAndUrl(
 //                            R.color.red,
