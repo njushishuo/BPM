@@ -106,4 +106,23 @@ public class PaperFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                papers = DAOFactory.getPaperDAO().getList();
+                List<PaperVO> contents = new ArrayList<>();
+                for (Paper paper : papers) {
+                    contents.add(new PaperVO(paper));
+                }
+                adapter.papers = contents;
+                Message message = new Message();
+                message.what = UPDATE_LIST;
+                handler.sendMessage(message);
+            }
+        }).start();
+    }
 }

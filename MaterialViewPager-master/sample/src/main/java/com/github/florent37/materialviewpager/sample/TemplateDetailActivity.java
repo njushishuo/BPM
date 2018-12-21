@@ -1,13 +1,17 @@
 package com.github.florent37.materialviewpager.sample;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,12 +30,21 @@ import com.github.florent37.materialviewpager.sample.model.Template;
 import com.github.florent37.materialviewpager.sample.rest.LabelDAO;
 import com.github.florent37.materialviewpager.sample.rest.PaperDAO;
 import com.github.florent37.materialviewpager.sample.rest.TemplateDAO;
+import com.github.florent37.materialviewpager.sample.util.RestUtil;
 import com.github.florent37.materialviewpager.sample.util.StringUtil;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class TemplateDetailActivity extends AppCompatActivity {
     private Spinner questionTypeSpinner;
@@ -50,6 +63,7 @@ public class TemplateDetailActivity extends AppCompatActivity {
     private static final int SAVE_TEMPLATE_FAIL=4;
     private static final int CREATE_PAPER_SUCCESS=5;
     private static final int CREATE_PAPER_FAIL=6;
+    private static int versionCount=0;
     private String templateDescript;
     private List<Label> labelList;
     private int addInvalidLabel=1;//0:不添加请选择；1：添加请选择
@@ -63,6 +77,8 @@ public class TemplateDetailActivity extends AppCompatActivity {
     private String recruitName;
     private String templateId;
     private String templateName;
+
+    private int paperIndexNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +105,15 @@ public class TemplateDetailActivity extends AppCompatActivity {
                 }
             }
         });
+
+        //试卷数字
+        String paperIndex=load();
+        if (!TextUtils.isEmpty(paperIndex)){
+            paperIndexNum=Integer.parseInt(paperIndex);
+        }else{
+            save("0");
+            paperIndexNum=0;
+        }
 
         editPaperDes=(EditText) findViewById(R.id.paper_descrip);
         addTemplateItem=(at.markushi.ui.CircleButton) findViewById(R.id.add_template_item);
@@ -140,10 +165,23 @@ public class TemplateDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         PaperDAO paperDAO=new PaperDAO();
-                        Paper newPaer=new Paper();
-                        newPaer.setRecruitId(recruitId);
-//                        newPaer.setName();
-                        Message message=new Message();
+                        Paper newPaper=new Paper();
+                        newPaper.setRecruitId(recruitId);
+                        newPaper.setName(templateName+paperIndexNum+"");
+                        TemplateDAO templateDAO=new TemplateDAO();
+                        newPaper.setQuestions(RestUtil.getQuestionsByTemplate(templateDAO.getObject(templateId)));
+                        if (paperDAO.postObject(newPaper)!=null){
+                            Message message=new Message();
+                            message.what=CREATE_PAPER_SUCCESS;
+                            handler.sendMessage(message);
+                            paperIndexNum++;
+                            save(paperIndexNum+"");
+                        }else{
+                            Message message=new Message();
+                            message.what=CREATE_PAPER_FAIL;
+                            handler.sendMessage(message);
+                        }
+
                     }
                 }).start();
             }
@@ -331,5 +369,48 @@ public class TemplateDetailActivity extends AppCompatActivity {
     }
     private void createPaperFail(){
         Toast.makeText(TemplateDetailActivity.this,"导出试卷失败，请稍后重试",Toast.LENGTH_SHORT).show();
+    }
+
+    public void save(String inputText){
+        FileOutputStream out=null;
+        BufferedWriter writer=null;
+        try {
+            out=openFileOutput("data_count",Context.MODE_PRIVATE);
+            writer=new BufferedWriter(new OutputStreamWriter(out));
+            writer.write(inputText);
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            try {
+                if (writer!=null)
+                    writer.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+    public String load(){
+        FileInputStream in=null;
+        BufferedReader reader=null;
+        StringBuilder content=new StringBuilder();
+        try{
+            in=openFileInput("data_count");
+            reader=new BufferedReader(new InputStreamReader(in));
+            String line="";
+            while ((line=reader.readLine())!=null){
+                content.append(line);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }finally {
+            if (reader!=null){
+                try {
+                    reader.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
+        return content.toString();
     }
 }
