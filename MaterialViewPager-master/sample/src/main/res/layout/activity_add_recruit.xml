@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".AddRecruitActivity"
-    android:background="@drawable/add_recruit_bg_1">
+    android:background="#FFFFFFFF">
     <RelativeLayout
         android:id="@+id/tab_title"
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="#A6009966"
+        android:background="#FF4caf50"
         android:paddingTop="30dp">
         <View
             android:layout_width="match_parent"
@@ -23,7 +23,7 @@
             android:layout_height="48dp"
             android:gravity="center"
             android:layout_centerHorizontal="true"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/white"
             android:text="添加需求"
             android:layout_marginBottom="5dp"/>
@@ -72,7 +72,7 @@
                     android:text=" 项目名称"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
                 <EditText
                     android:layout_width="240dp"
                     android:layout_height="28dp"
@@ -111,7 +111,7 @@
                     android:text=" 项目类型"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
                 <Spinner
                     android:layout_width="240dp"
                     android:layout_height="35dp"
@@ -133,7 +133,7 @@
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
                 <TextView
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
@@ -165,7 +165,7 @@
                     android:text=" 试卷模板"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
                 <TextView
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
