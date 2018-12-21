@@ -25,7 +25,7 @@
             android:name="io.fabric.ApiKey"
             android:value="29cbd600bb8183011201895a931db91e93f2d614" />
 
-        <activity android:name=".AddRecruitActivity" />
+        <activity android:name=".AddRecruitActivity" android:windowSoftInputMode="adjustPan|stateHidden"/>
         <activity android:name=".QuestionListActivity"></activity>
     </application>
 

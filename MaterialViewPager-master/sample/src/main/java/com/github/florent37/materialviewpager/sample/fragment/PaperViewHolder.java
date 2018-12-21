@@ -7,11 +7,8 @@ import android.widget.TextView;
 import com.github.florent37.materialviewpager.sample.R;
 
 public class PaperViewHolder extends RecyclerView.ViewHolder {
-//    public TextView tv;
-
     public  PaperViewHolder(View itemView) {
         super(itemView);
-//        tv = itemView.findViewById(R.id.paper_name);
     }
 
 }

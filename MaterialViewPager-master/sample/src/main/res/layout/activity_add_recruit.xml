@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".AddRecruitActivity">
+    tools:context=".AddRecruitActivity"
+    android:background="@drawable/add_recruit_bg_1">
     <RelativeLayout
         android:id="@+id/tab_title"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/transparent">
+        android:layout_height="65dp"
+        android:background="#A6009966"
+        android:paddingTop="30dp">
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
@@ -18,12 +20,13 @@
         <TextView
             android:id="@+id/txt_top"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:gravity="center"
-            android:layout_centerInParent="true"
+            android:layout_centerHorizontal="true"
             android:textSize="20sp"
-            android:textColor="@color/black_semi_transparent"
-            android:text="添加需求" />
+            android:textColor="@color/white"
+            android:text="添加需求"
+            android:layout_marginBottom="5dp"/>
     </RelativeLayout>
 
     <!--<Button-->
@@ -36,7 +39,6 @@
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="添加"
         app:bootstrapBrand="success"
         app:bootstrapSize="lg"
         app:buttonMode="regular"
@@ -44,14 +46,17 @@
         app:roundedCorners="true"
         android:id="@+id/add_xuqiu_button"
         android:layout_alignParentBottom="true"
+        app:bootstrapText="添加"
         android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="2dp"/>
+        android:layout_marginVertical="3dp" />
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tab_title"
-        android:layout_above="@id/add_xuqiu_button">
+        android:layout_above="@id/add_xuqiu_button"
+        android:fitsSystemWindows="true"
+        android:scrollbars="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -64,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="项目名称"
+                    android:text=" 项目名称"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"/>
@@ -103,7 +108,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="项目类型"
+                    android:text=" 项目类型"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
                     android:textSize="18sp"/>
@@ -124,7 +129,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="项目描述"
+                    android:text=" 项目描述"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
@@ -157,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="试卷模板"
+                    android:text=" 试卷模板"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
                     android:textSize="18sp"/>
@@ -232,7 +237,7 @@
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="start"
+                        android:gravity="start"
                         android:layout_marginTop="2dp"
                         android:lines="4"
                         android:background="@drawable/edit_bg"
