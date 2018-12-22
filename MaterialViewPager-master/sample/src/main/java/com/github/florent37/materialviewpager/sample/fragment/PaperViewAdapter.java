@@ -7,16 +7,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.github.florent37.materialviewpager.sample.R;
+import com.github.florent37.materialviewpager.sample.model.Paper;
 import com.github.florent37.materialviewpager.sample.model.PaperVO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class PaperViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class PaperViewAdapter extends RecyclerView.Adapter<PaperViewHolder> {
 
     List<PaperVO> papers;
 
     static final int TYPE_LARGE = 0;
+
+    private OnClickPaperItemRecyclerListener listener;
 
     public PaperViewAdapter() {
         this.papers = new ArrayList<>();
@@ -33,15 +36,25 @@ public class PaperViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PaperViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
 
         switch (viewType) {
             case TYPE_LARGE: {
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.list_item_paper, parent, false);
-                return new RecyclerView.ViewHolder(view) {
-                };
+                final PaperViewHolder viewHolder=new PaperViewHolder(view);
+//                return new RecyclerView.ViewHolder(view) {
+//                };
+                if (listener!=null){
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            listener.onPaperItemClick(view,viewHolder.getLayoutPosition());
+                        }
+                    });
+                }
+                return viewHolder;
             }
         }
         return null;
@@ -49,7 +62,7 @@ public class PaperViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(PaperViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case TYPE_LARGE:
                 View view = holder.itemView;
@@ -64,4 +77,9 @@ public class PaperViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
                 break;
         }
     }
+
+    public void setListener(OnClickPaperItemRecyclerListener listener){
+        this.listener=listener;
+    }
+
 }

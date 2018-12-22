@@ -1,6 +1,5 @@
-package com.example.lpp.examinationsystem;
+package com.github.florent37.materialviewpager.sample;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
@@ -9,34 +8,29 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.lpp.examinationsystem.model.Label;
-import com.example.lpp.examinationsystem.model.Recruit;
-import com.example.lpp.examinationsystem.model.Template;
-import com.example.lpp.examinationsystem.rest.LabelDAO;
-import com.example.lpp.examinationsystem.rest.PaperDAO;
-import com.example.lpp.examinationsystem.rest.RecruitDAO;
-import com.example.lpp.examinationsystem.rest.TemplateDAO;
-import com.example.lpp.examinationsystem.rest.UserDAO;
-import com.example.lpp.examinationsystem.util.RestUtil;
-import com.example.lpp.examinationsystem.util.StringUtil;
+import com.github.florent37.materialviewpager.sample.model.Label;
+import com.github.florent37.materialviewpager.sample.model.Recruit;
+import com.github.florent37.materialviewpager.sample.model.Template;
+import com.github.florent37.materialviewpager.sample.rest.LabelDAO;
+import com.github.florent37.materialviewpager.sample.rest.RecruitDAO;
+import com.github.florent37.materialviewpager.sample.rest.TemplateDAO;
+import com.github.florent37.materialviewpager.sample.rest.UserDAO;
+import com.github.florent37.materialviewpager.sample.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class AddRequirementActivity extends AppCompatActivity{
+public class AddRecruitActivity extends AppCompatActivity {
 
     private Spinner projectTypeSpinner;
     private Spinner questionTypeSpinner;
@@ -64,11 +58,11 @@ public class AddRequirementActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_xuqiu);
-        ActionBar actionBar=getSupportActionBar();
-        if (actionBar!=null){
-            actionBar.hide();
-        }
+        setContentView(R.layout.activity_add_recruit);
+//        ActionBar actionBar=getSupportActionBar();
+//        if (actionBar!=null){
+//            actionBar.hide();
+//        }
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -132,7 +126,8 @@ public class AddRequirementActivity extends AppCompatActivity{
                         }
                     }).start();
                 }else {
-                    Toast.makeText(AddRequirementActivity.this,"必须填写项目名称，选择项目类型",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddRecruitActivity
+                            .this,"必须填写项目名称，选择项目类型",Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -183,7 +178,7 @@ public class AddRequirementActivity extends AppCompatActivity{
      * 定义一个Myadapter类继承ArrayAdapter
      * 重写以下两个方法
      * */
-    class Myadapter<T> extends ArrayAdapter{
+    class Myadapter<T> extends ArrayAdapter {
         public Myadapter(@NonNull Context context, int resource, @NonNull List<T> objects) {
             super(context, resource, objects);
         }
@@ -284,23 +279,23 @@ public class AddRequirementActivity extends AppCompatActivity{
                 }
             }).start();
         }else{
-            Toast.makeText(AddRequirementActivity.this,"添加项目成功",Toast.LENGTH_SHORT).show();
-            Intent intent=new Intent(AddRequirementActivity.this,MainActivity.class);
+            Toast.makeText(AddRecruitActivity.this,"添加项目成功",Toast.LENGTH_SHORT).show();
+            Intent intent=new Intent(AddRecruitActivity.this,MainActivity.class);
             startActivity(intent);
         }
     }
     private void addRecruitFaiLAction(){
-        Toast.makeText(AddRequirementActivity.this,"添加失败，请稍后重试",Toast.LENGTH_SHORT).show();
+        Toast.makeText(AddRecruitActivity.this,"添加失败，请稍后重试",Toast.LENGTH_SHORT).show();
     }
 
     private void addTemplateSuccess(){
-        Toast.makeText(AddRequirementActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(AddRequirementActivity.this,MainActivity.class);
+        Toast.makeText(AddRecruitActivity.this,"添加成功",Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(AddRecruitActivity.this,MainActivity.class);
         startActivity(intent);
     }
     private void addTemplateFail(){
-        Toast.makeText(AddRequirementActivity.this,"添加模板失败，添加项目成功",Toast.LENGTH_SHORT).show();
-        Intent intent=new Intent(AddRequirementActivity.this,MainActivity.class);
+        Toast.makeText(AddRecruitActivity.this,"添加模板失败，添加项目成功",Toast.LENGTH_SHORT).show();
+        Intent intent=new Intent(AddRecruitActivity.this,MainActivity.class);
         startActivity(intent);
     }
 }

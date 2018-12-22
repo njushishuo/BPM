@@ -1,5 +1,6 @@
 package com.github.florent37.materialviewpager.sample.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,8 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
+import com.github.florent37.materialviewpager.sample.QuestionListActivity;
 import com.github.florent37.materialviewpager.sample.R;
 import com.github.florent37.materialviewpager.sample.model.Paper;
 import com.github.florent37.materialviewpager.sample.model.PaperVO;
@@ -31,6 +34,8 @@ public class PaperFragment extends Fragment {
     private static final int UPDATE_LIST = 1;
 
     protected PaperViewAdapter adapter = new PaperViewAdapter();
+
+    private List<Paper> papers;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -65,7 +70,7 @@ public class PaperFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<Paper> papers = DAOFactory.getPaperDAO().getList();
+                papers = DAOFactory.getPaperDAO().getList();
                 List<PaperVO> contents = new ArrayList<>();
                 for (Paper paper : papers) {
                     contents.add(new PaperVO(paper));
@@ -87,5 +92,37 @@ public class PaperFragment extends Fragment {
         //Use this now
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         mRecyclerView.setAdapter(adapter);
+
+        adapter.setListener(new OnClickPaperItemRecyclerListener() {
+            @Override
+            public void onPaperItemClick(View view, int position) {
+                Paper item=papers.get(position);
+                long paper_id=item.getId();
+//        Log.d("PaperFragment",String.valueOf(paper_id));
+                Intent intent=new Intent(getActivity(),QuestionListActivity.class);
+                intent.putExtra("paper id",String.valueOf(paper_id));
+                intent.putExtra("paper name",item.getName());
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                papers = DAOFactory.getPaperDAO().getList();
+                List<PaperVO> contents = new ArrayList<>();
+                for (Paper paper : papers) {
+                    contents.add(new PaperVO(paper));
+                }
+                adapter.papers = contents;
+                Message message = new Message();
+                message.what = UPDATE_LIST;
+                handler.sendMessage(message);
+            }
+        }).start();
     }
 }

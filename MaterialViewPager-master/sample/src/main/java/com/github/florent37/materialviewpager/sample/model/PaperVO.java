@@ -19,7 +19,7 @@ public class PaperVO {
             for (Label label : labels) {
                 String labelName = label.getName();
                 if (labelsMap.containsKey(labelName)) {
-                    labelsMap.put(labelName, labelsMap.get(labelName + 1));
+                    labelsMap.put(labelName, labelsMap.get(labelName) + 1);
                 } else {
                     labelsMap.put(labelName, 1);
                 }

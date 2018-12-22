@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddRequirementActivity">
-
+    android:layout_height="wrap_content"
+    tools:context=".AddRecruitActivity"
+    android:background="#FFFFFFFF">
     <RelativeLayout
         android:id="@+id/tab_title"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/transparent">
+        android:layout_height="65dp"
+        android:background="#FF4caf50"
+        android:paddingTop="30dp">
         <View
             android:layout_width="match_parent"
             android:layout_height="2px"
@@ -19,25 +20,25 @@
         <TextView
             android:id="@+id/txt_top"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:gravity="center"
-            android:layout_centerInParent="true"
-            android:textSize="20sp"
-            android:textColor="@color/tab_text_grey"
-            android:text="添加需求" />
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:text="添加需求"
+            android:layout_marginBottom="5dp"/>
     </RelativeLayout>
 
     <!--<Button-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:text="添加"-->
-        <!--android:textSize="18sp"-->
-        <!--android:id="@+id/add_xuqiu_button"-->
-        <!--android:layout_alignParentBottom="true"/>-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:text="添加"-->
+    <!--android:textSize="18sp"-->
+    <!--android:id="@+id/add_xuqiu_button"-->
+    <!--android:layout_alignParentBottom="true"/>-->
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="添加"
         app:bootstrapBrand="success"
         app:bootstrapSize="lg"
         app:buttonMode="regular"
@@ -45,14 +46,17 @@
         app:roundedCorners="true"
         android:id="@+id/add_xuqiu_button"
         android:layout_alignParentBottom="true"
+        app:bootstrapText="添加"
         android:layout_marginHorizontal="5dp"
-        android:layout_marginVertical="2dp"/>
+        android:layout_marginVertical="3dp"/>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tab_title"
-        android:layout_above="@id/add_xuqiu_button">
+        android:layout_above="@id/add_xuqiu_button"
+        android:fitsSystemWindows="true"
+        android:scrollbars="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -65,10 +69,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="项目名称"
+                    android:text=" 项目名称"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
                 <EditText
                     android:layout_width="240dp"
                     android:layout_height="28dp"
@@ -77,21 +81,22 @@
                     android:background="@drawable/edit_bg"
                     android:id="@+id/project_name"
                     android:gravity="start"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp"
+                    android:textColor="@color/black_semi_transparent"/>
                 <!--<com.github.florent37.materialtextfield.MaterialTextField-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--app:mtf_labelColor="#666"-->
-                    <!--app:mtf_image="@drawable/save"-->
-                    <!--android:layout_marginHorizontal="10dp">-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--app:mtf_labelColor="#666"-->
+                <!--app:mtf_image="@drawable/save"-->
+                <!--android:layout_marginHorizontal="10dp">-->
 
-                    <!--<EditText-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:hint="项目名称"-->
-                        <!--android:textColor="#333"-->
-                        <!--android:textSize="15sp"-->
-                        <!--android:id="@+id/project_name"/>-->
+                <!--<EditText-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="项目名称"-->
+                <!--android:textColor="#333"-->
+                <!--android:textSize="15sp"-->
+                <!--android:id="@+id/project_name"/>-->
 
                 <!--</com.github.florent37.materialtextfield.MaterialTextField>-->
             </LinearLayout>
@@ -103,10 +108,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="项目类型"
+                    android:text=" 项目类型"
                     android:gravity="center"
                     android:layout_gravity="center_vertical"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
                 <Spinner
                     android:layout_width="240dp"
                     android:layout_height="35dp"
@@ -124,17 +129,18 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="项目描述"
+                    android:text=" 项目描述"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
                 <TextView
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="5dp"
                     android:layout_marginHorizontal="20dp"
-                    android:background="@color/transparent" />
+                    android:background="@color/transparent"
+                    android:textColor="@color/black_semi_transparent"/>
 
             </LinearLayout>
             <EditText
@@ -146,6 +152,7 @@
                 android:background="@drawable/edit_bg"
                 android:gravity="start"
                 android:textSize="15sp"
+                android:textColor="@color/black_semi_transparent"
                 android:id="@+id/project_descrip"/>
 
             <LinearLayout
@@ -155,10 +162,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="试卷模板"
+                    android:text=" 试卷模板"
                     android:layout_gravity="center_vertical"
                     android:gravity="center"
-                    android:textSize="18sp"/>
+                    android:textSize="16sp"/>
                 <TextView
                     android:layout_width="240dp"
                     android:layout_height="wrap_content"
@@ -178,13 +185,13 @@
                     android:orientation="vertical">
                 </LinearLayout>
                 <!--<ImageButton-->
-                    <!--android:layout_width="32dp"-->
-                    <!--android:layout_height="32dp"-->
-                    <!--android:src="@drawable/plus2"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:background="@color/transparent"-->
-                    <!--android:layout_marginBottom="10dp"-->
-                    <!--android:id="@+id/add_template_button"/>-->
+                <!--android:layout_width="32dp"-->
+                <!--android:layout_height="32dp"-->
+                <!--android:src="@drawable/plus2"-->
+                <!--android:layout_gravity="center"-->
+                <!--android:background="@color/transparent"-->
+                <!--android:layout_marginBottom="10dp"-->
+                <!--android:id="@+id/add_template_button"/>-->
                 <FrameLayout
                     xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -211,7 +218,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_marginLeft="8dp"
                         android:layout_weight="1"
-                        android:gravity="center"
+                        android:gravity="left"
                         android:text="试卷描述"
                         android:textSize="15sp" />
 
@@ -226,15 +233,17 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="20dp"
+                        android:gravity="start"
                         android:layout_marginTop="2dp"
                         android:lines="4"
                         android:background="@drawable/edit_bg"
-                        android:gravity="start"
+                        android:layout_marginLeft="10dp"
                         android:textSize="15sp"
+                        android:textColor="@color/black_semi_transparent"
                         android:id="@+id/paper_descrip"/>
                 </LinearLayout>
 

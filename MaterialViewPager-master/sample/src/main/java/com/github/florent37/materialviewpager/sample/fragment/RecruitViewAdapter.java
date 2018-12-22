@@ -13,11 +13,13 @@ import com.github.florent37.materialviewpager.sample.model.Recruit;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecruitViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecruitViewAdapter extends RecyclerView.Adapter<RecruitViewHolder> {
 
     List<Recruit> contents;
 
     static final int TYPE_LARGE = 0;
+
+    private OnClickRecruitItemRecyclerListener listener;
 
     public RecruitViewAdapter() {
         this.contents = new ArrayList<>();
@@ -38,15 +40,23 @@ public class RecruitViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecruitViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = null;
 
         switch (viewType) {
             case TYPE_LARGE: {
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.list_item_recruit, parent, false);
-                return new RecyclerView.ViewHolder(view) {
-                };
+                final RecruitViewHolder viewHolder=new RecruitViewHolder(view);
+                if (listener!=null){
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            listener.onRecruitItemClick(view,viewHolder.getLayoutPosition());
+                        }
+                    });
+                }
+                return viewHolder;
             }
         }
         return null;
@@ -54,7 +64,7 @@ public class RecruitViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(RecruitViewHolder holder, int position) {
         switch (getItemViewType(position)) {
             case TYPE_LARGE:
                 View view = holder.itemView;
@@ -93,5 +103,9 @@ public class RecruitViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         } else {
             return R.drawable.recruit_type3;
         }
+    }
+
+    public void setListener(OnClickRecruitItemRecyclerListener listener){
+        this.listener=listener;
     }
 }

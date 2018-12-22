@@ -1,5 +1,6 @@
 package com.github.florent37.materialviewpager.sample.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.github.florent37.materialviewpager.header.MaterialViewPagerHeaderDecorator;
 import com.github.florent37.materialviewpager.sample.R;
+import com.github.florent37.materialviewpager.sample.RecruitDetailActivity;
 import com.github.florent37.materialviewpager.sample.model.Recruit;
 import com.github.florent37.materialviewpager.sample.rest.DAOFactory;
 
@@ -29,6 +31,8 @@ public class RecruitFragment extends Fragment {
     private static final int UPDATE_LIST = 1;
 
     protected RecruitViewAdapter adapter = new RecruitViewAdapter();
+
+    private List<Recruit> items;
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
@@ -63,7 +67,7 @@ public class RecruitFragment extends Fragment {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                List<Recruit> items = DAOFactory.getRecruitDAO().getList();
+                items = DAOFactory.getRecruitDAO().getList();
                 adapter.contents = items;
                 Message message = new Message();
                 message.what = UPDATE_LIST;
@@ -81,5 +85,34 @@ public class RecruitFragment extends Fragment {
         //Use this now
         mRecyclerView.addItemDecoration(new MaterialViewPagerHeaderDecorator());
         mRecyclerView.setAdapter(adapter);
+
+        adapter.setListener(new OnClickRecruitItemRecyclerListener() {
+            @Override
+            public void onRecruitItemClick(View view, int position) {
+                Recruit item=items.get(position);
+                String project_name=item.getName();
+                Intent intent=new Intent(getActivity(),RecruitDetailActivity.class);
+                intent.putExtra("project id",item.getId()+"");
+                intent.putExtra("project name",project_name);
+                intent.putExtra("project type",item.getType());
+                intent.putExtra("project description",item.getDescription());
+                startActivity(intent);
+            }
+        });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                items = DAOFactory.getRecruitDAO().getList();
+                adapter.contents = items;
+                Message message = new Message();
+                message.what = UPDATE_LIST;
+                handler.sendMessage(message);
+            }
+        }).start();
     }
 }
